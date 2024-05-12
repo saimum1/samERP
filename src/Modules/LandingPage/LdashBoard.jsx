@@ -76,7 +76,9 @@ const LdashBoard = ({getRenderCode}) => {
              
                                      <div style={styles.container} >
                                      <div style={styles.shadow}  ></div>
-                                           {!loaded && <img src={''} alt="Placeholder" style={{ width: '100%', height: '100%' }} />}
+                                           {!loaded &&     <div style={{display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',width:'100%'}} className='textContainer'>
+                                                             {e.name}
+                                                          </div>}
                                                 <img
                                                  src={e.img}
                                                  alt="Actual GIF"

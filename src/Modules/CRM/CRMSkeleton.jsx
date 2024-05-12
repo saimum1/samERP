@@ -73,23 +73,37 @@ const CRMSkeleton = () =>{
   return (
     <div   style={{height : 'calc(100vh - 4.5rem)', width:'100%', backgroundColor:global_css.primary_bg,display:'flex' ,justifyContent:'center',alignItems:'flex-start',paddingTop:'2px',overflow:'hidden'}}>
         
-            <div style={{flex:'16%' ,backgroundColor:global_css.primary_card_bg,height:'98.5%',width:'100%',display:"flex",justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+            <div style={{flex:'16%' ,backgroundColor:global_css.primary_card_bg,height:'98.5%',width:'auto',display:"flex",justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
 
                 <div style={{flex:'55%',height:'100%',width:'100%',display:'flex',flexDirection:'column',justifyContent:'flex-start',alignItems:'center',paddingTop:'1rem',transition:'all 300ms',gap:'2px'}}>
 
                         {dataset &&  dataset.map((n,index)=>{
                             console.log("index",index)
-                            return(<div style={{display:'flex',flexDirection:'column',width:'85%'}}
+                            return(<div style={{display:'flex',flexDirection:'column',width:'95%'}}
                             >
                                      <div  
-                                        key={index} style={{width:'100%',height:'2.4rem',display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'1rem',backgroundColor: (hoveredIndex === index || selectedIndex === index) ? 'rgba(39, 207, 122, 0.10)' : '',paddingLeft: (hoveredIndex === index || selectedIndex === index) ?'1.2rem':'0.7rem',borderRadius:'6px',cursor:"pointer",transition:'all 300ms',margin:'4px 0px'}}
+                                        key={index} style={{width:'100%',height:'2.4rem',display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'.7rem',backgroundColor: (hoveredIndex === index || selectedIndex === index) ? 'rgba(39, 207, 122, 0.10)' : '',paddingLeft: (hoveredIndex === index || selectedIndex === index) ?'1rem':'0.5rem',borderRadius:'6px',cursor:"pointer",transition:'all 300ms',margin:'4px 0px'}}
                                         onMouseEnter={() => {setHoveredIndex(index)}}
                                         onMouseLeave={() => setHoveredIndex(null)}
-                                        onClick={()=>{setshowcomponent(n.code);setselectedIndex(selectedIndex=== index?'':index);setshowcomponentouter('');setselectedIndexOuter('');settransition()}}
+                                      //  onClick={()=>{setshowcomponent(n.code);setselectedIndex(selectedIndex=== index?'':index);setshowcomponentouter('');setselectedIndexOuter('');settransition()}}
+                                          onClick={() => {
+                                            if (n.menu.length === 0) {
+                                                setshowcomponent(n.code);
+                                                setselectedIndex(selectedIndex === index ? '' : index);
+                                                setshowcomponentouter('');
+                                                setselectedIndexOuter('');
+                                                settransition();
+                                            }else if(n.menu.length > 0){
+                                              setselectedIndex(selectedIndex === index ? '' : index);
+                                              setshowcomponentouter('');
+                                              setselectedIndexOuter('');
+                                              // setshowcomponent(n.code);
+                                            }
+                                            }}
                                         >
                                           <span><img src={ (hoveredIndex === index || selectedIndex === index) ? n.imgsec : n.img}  style={{width:'100%',height:'100%'}}/></span>                         
-                                        <span style={{color: (hoveredIndex === index || selectedIndex === index) ? '#27CF7A':global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'100%',lineHeight:'24px'}}>{n.name}</span>
-                                        {n.code ===1 || n.code ===4 || n.code === 7?
+                                        <span style={{color: (hoveredIndex === index || selectedIndex === index) ? '#27CF7A':global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px'}}>{n.name}</span>
+                                        {n.menu.length>0?
                                       
                                         <FontAwesomeIcon rotation={selectedIndex === index? 180:''} icon={faAngleUp}  style={{color:(hoveredIndex === index || selectedIndex === index)?'#27CF7A':'white',transition:'all 300ms'}}/>
                                         :''}
@@ -101,13 +115,13 @@ const CRMSkeleton = () =>{
                                       n.menu?.map((i,innderindex)=>{
                                         return(
                                               <div  key={innderindex}
-                                              style={{margin:(selectedIndex === index)? '2px 0px':'',width:'100%',height:(selectedIndex === index) ?'2.4rem':'0rem',display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'10px',backgroundColor: (HoveredIndexInner === innderindex || selectedIndexOuter === innderindex) ? 'rgba(39, 207, 122, 0.10)' : '',paddingLeft:'30%',borderRadius:'6px',cursor:"pointer",transition:'all 300ms'}}
+                                              style={{margin:(selectedIndex === index)? '2px 0px':'',width:'100%',height:(selectedIndex === index) ?'2.4rem':'0rem',display:'flex',justifyContent:'flex-start',alignItems:'center',backgroundColor: (HoveredIndexInner === innderindex || selectedIndexOuter === innderindex) ? 'rgba(39, 207, 122, 0.10)' : '',paddingLeft:'30%',borderRadius:'6px',cursor:"pointer",transition:'all 300ms'}}
                                               onMouseEnter={() => {setHoveredIndexInner(innderindex)}}
                                               onMouseLeave={() => setHoveredIndexInner(null)}
-                                              onClick={()=>{setshowcomponentouter(i.code);setselectedIndexOuter(innderindex);settransition()}}
+                                              onClick={()=>{setshowcomponent(n.code);setshowcomponentouter(i.code);setselectedIndexOuter(innderindex);settransition()}}
                                               >
                                                                 
-                                            {(selectedIndex === index)? <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center' ,gap:'4px',width:'100%'}}> <span  style={{color: (HoveredIndexInner === innderindex || selectedIndexOuter === innderindex) ? '#27CF7A':global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'16px',lineHeight:'24px'}}>  {i.name} </span> 
+                                            {(selectedIndex === index)? <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center' ,width:'100%'}}> <span  style={{color: (HoveredIndexInner === innderindex || selectedIndexOuter === innderindex) ? '#27CF7A':global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px'}}>  {i.name} </span> 
                                         </div>:''}
 
                                             </div>
