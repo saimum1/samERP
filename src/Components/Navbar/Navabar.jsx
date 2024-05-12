@@ -50,7 +50,7 @@ const Navabar = () => {
                 selectedlang.image = i.image
             }
         }
-        setclicked(!clicked)
+        showlangoptions()
 
     }
     return (
@@ -87,7 +87,7 @@ const Navabar = () => {
                 {/* #8d9aaa */}
                         <div style={{display:'flex',justifyContent:'center' ,alignItems:'center' ,flex:'1',width:'100%' ,height:'100%'}}>
                             {/* <img src={selectedlang.image} style={{width:'48px' ,height:'25px'}}/> */}
-                            <div style={{width:'27px' ,height:'27px',borderRadius:'50%',border:'1px solid #8cbfff',overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',boxShadow:'0px 0px 10px  whitesmoke'}}>
+                            <div style={{width:'27px' ,height:'27px',borderRadius:'50%',border:'1px solid #8cbfff',overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',boxShadow:'0px 0px 10px  whitesmoke',}}>
                              <FontAwesomeIcon icon={faUserTie} style={{width:'90%' ,height:'90%',color:'#6d85a3'}}/>
                             </div>
                            
