@@ -40,10 +40,6 @@ const Navabar = () => {
     const showlangoptions=()=>{
             setclicked(!clicked)
             setclickedsec(!clickedsec)
-
-            // setTimeout(() => {
-            //     setclickedsec(!clickedsec)
-            //  }, 300);
     }
 
     const setlang=(e)=>{
@@ -62,7 +58,7 @@ const Navabar = () => {
         <div style={{backgroundColor:"#303038",display:"flex",height:"4.5rem" ,
         width:'100%',justifyContent:'space-between',alignItems:'center' }} >
           
-               <div style={{height:"auto",width:'auto',marginLeft:'2%'}}>
+               <div style={{height:"auto",width:'auto',marginLeft:'4%'}}>
                     {/* <img src={companylogo} style={{width:'193px'}} /> */}
                
                    <span  onClick={()=> window.location.reload()} style={{width:'193px',color:global_css.primary_txt_color,cursor:'pointer'}}>Company logo</span>
@@ -79,21 +75,29 @@ const Navabar = () => {
                 marginRight:"3rem",display:"flex",justifyContent:'center',alignItems:'center',flexDirection:'column',}}>
                 
 
-                <div style={{backgroundColor:"var(--Dark-Gery, #444)" 
+                <div style={{backgroundColor:"var(--Dark-Gery, #444)" ,cursor:'pointer'
                         ,height:"2.6rem",width:'100%' , borderTopRightRadius:"8px",
                         borderTopLeftRadius: "8px",borderBottomLeftRadius:clicked?'':'8px',borderBottomRightRadius:clicked?'':'8px',
-                        padding:'8px 16px',display:"flex",justifyContent:'center',alignItems:'center'}}>
-                
+                        padding:'8px 16px',display:"flex",justifyContent:'center',alignItems:'center'}}
+                        
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#555")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--Dark-Gery, #444)")}
+                        onClick={()=>showlangoptions()}
+                        >
+                {/* #8d9aaa */}
                         <div style={{display:'flex',justifyContent:'center' ,alignItems:'center' ,flex:'1',width:'100%' ,height:'100%'}}>
                             {/* <img src={selectedlang.image} style={{width:'48px' ,height:'25px'}}/> */}
-                            <FontAwesomeIcon icon={faUserTie} style={{width:'48px' ,height:'25px',color:'#8d9aaa'}}/>
+                            <div style={{width:'27px' ,height:'27px',borderRadius:'50%',border:'1px solid #8cbfff',overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',boxShadow:'0px 0px 10px  whitesmoke'}}>
+                             <FontAwesomeIcon icon={faUserTie} style={{width:'90%' ,height:'90%',color:'#6d85a3'}}/>
+                            </div>
+                           
                         </div>
                         <div style={{display:'flex',justifyContent:'flex-start' ,alignItems:'center' ,flex:'8',width:'100%' ,height:'100%',
-                        color:'rgba(255, 255, 255, 0.85)' ,fontFamily:"inter",fontWeight:"400" ,lineHeight:"15px",fontSize:"100%"}}>
+                        color:'rgba(255, 255, 255, 0.85)' ,fontFamily:"inter",fontWeight:"400" ,lineHeight:"15px",fontSize:"100%",paddingLeft:'16px'}}>
                                     RH Saimum
                             </div>
                         <div style={{cursor:'pointer',display:'flex',justifyContent:'center' ,alignItems:'center' ,flex:'1',width:'100%' ,height:'100%'}} 
-                            onClick={()=>showlangoptions()}
+                          
                         >
                              <FontAwesomeIcon icon={faCaretDown} style={{color:'#2aea87' ,height:'25px' ,width:"25px",}} rotation={clicked && 180}/>
                         </div>
