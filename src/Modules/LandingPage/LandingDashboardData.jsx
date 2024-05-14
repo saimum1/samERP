@@ -5,32 +5,37 @@ import salesicon from '../../assets/static/salesx.gif'
 import accountingicon from '../../assets/static/analyticgf.gif'
 import settingicon from '../../assets/static/settingx.gif'
 import locationicon from '../../assets/static/locationgf.gif'
+import hricon from '../../assets/static/hr.gif'
 
 export const homelandingdataset=[
    
      {
       'img':helpDeskicon,
       'name':'Help Desk',
-      
         'code':1
          },
          {
-            'img':crmicon,
-            'name':'CRM',
+            'img':hricon,
+            'name':'HR',
             'code':2
-             }, {
+             }, 
+             {
+               'img':crmicon,
+               'name':'CRM',
+               'code':3
+                },{
                 'img':accountingicon,
                 'name':'Accounting',
-                'code':3
+                'code':4
                  },
                  {
                     'img':salesicon,
                     'name':'Sales',
-                    'code':4
+                    'code':5
                      }, {
                         'img':settingicon,
                         'name':'Settings',
-                        'code':5
+                        'code':6
                          },
             
 
