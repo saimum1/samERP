@@ -5,7 +5,8 @@ import { global_css } from '../../GlobalCss/GlobalCSS';
 import Dashboardskeleton from '../../Components/SkeletonDashboard/Dashboardskeleton';
 import { useParams } from 'react-router-dom';
 import CRMSkeleton from '../CRM/CRMSkeleton';
-import DashboardCrm from '../CRM/DashboardCrm';
+import DashboardCrm from '../CRM/MarketingDashboard/DashboardCrm';
+import SettingsSkeleton from '../Settings/SettingsSkeleton';
 
 
 const LandingRoute = () => {
@@ -27,11 +28,12 @@ const LandingRoute = () => {
     const renderComponent = () => {
     
     switch (showcomponent) {
-        case 0:
-        return <DashboardCrm />
-
+       
         case 2:
         return <CRMSkeleton  />
+
+        case 6:
+          return <SettingsSkeleton  />
        
       default:
         return <LdashBoard getRenderCode={getRenderCode}/>;
@@ -64,7 +66,7 @@ const LandingRoute = () => {
                      { pageview && renderComponent()}
                 </div>
           
-            <style jsx>
+            <style>
     {`
    .page-transition {
     opacity: 1;

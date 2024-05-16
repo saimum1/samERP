@@ -56,24 +56,17 @@ const LdashBoard = ({getRenderCode}) => {
   return (
 
 
-    <div style={{height : '100%' ,width:'100%',backgroundColor:global_css.primary_bg,display:'flex',justifyContent:'center',alignItems:'center',transition:'all 400ms'}}>
-
+    <div style={{height : '100%' ,width:'100%',backgroundColor:global_css.homeBackColor,display:'flex',justifyContent:'center',alignItems:'center',transition:'all 400ms',color:global_css.primary_txt_color}}>
         <div style={{height:'100%',width:'75%',display:'flex',justifyContent:'center',alignItems:'flex-start',textAlign:'center',overflowY:'auto',padding:'2rem 0rem',transition:'all 400ms'}}>
                 <div className="grid-container" style={{transition:'all 400ms'}}>
-
-
-                    {homelandingdataset?.map((e)=>{
-
-
-
+                    {homelandingdataset?.map((e,index)=>{
                             return(
 
                                 <div className="grid-item" 
                                  onClick={()=>redirectTocomp(e.code)}
+
+                                 key={index}
                                 >
-             
-                              
-             
                                      <div style={styles.container} >
                                      <div style={styles.shadow}  ></div>
                                            {!loaded &&     <div style={{display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',width:'100%'}} className='textContainer'>
@@ -85,7 +78,6 @@ const LdashBoard = ({getRenderCode}) => {
                                                  style={{ width: '40%', height: '100%', opacity: loaded ? 1 : 0 , filter: 'contrast(1.5)', 
                                                  imageRendering: 'crisp-edges',transition:'all 400ms'}}
                                                  onLoad={handleImageLoaded}
-             
                                                  onMouseEnter={(e)=>{e.currentTarget.style.transform = 'scale(1.2)'}}
                                                  onMouseLeave={(e)=>{e.currentTarget.style.transform = 'scale(1)'}}
                                              />
@@ -114,7 +106,7 @@ const LdashBoard = ({getRenderCode}) => {
                 </div>
          </div>
            
-            <style jsx>
+            <style >
                 {
                     `
                     .grid-container {
@@ -147,10 +139,9 @@ const LdashBoard = ({getRenderCode}) => {
                         align-items: center;
                         text-align: center;
                         width: 100%;
-                        color: #E4E4E4;
                     
                         font-family: "Inter", system-ui, sans-serif;
-                        font-size: 20px;
+                        font-size: 17px;
                         font-weight:bold; 
                       }
                       

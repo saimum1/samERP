@@ -12,17 +12,17 @@ export const homelandingdataset=[
      {
       'img':helpDeskicon,
       'name':'Help Desk',
-        'code':1
+        'code':0
          },
          {
             'img':hricon,
             'name':'HR',
-            'code':2
+            'code':3
              }, 
              {
                'img':crmicon,
                'name':'CRM',
-               'code':3
+               'code':2
                 },{
                 'img':accountingicon,
                 'name':'Accounting',

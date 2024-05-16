@@ -1,17 +1,18 @@
 import React,{useState,useEffect} from 'react'
 import { global_css } from '../../GlobalCss/GlobalCSS.js'
 import LineIcon from '../../assets/static/Line.svg'
-import { dataset } from './CRMSKeletonData.jsx'
+import { dataset } from './SettingsSkeletonData.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faL } from '@fortawesome/free-solid-svg-icons'
 
 import {useAuth} from "../../Context/AuthInfo.jsx";
 import axios from "axios";
 import config from "../../config.jsx";
-import DashboardCrm from './MarketingDashboard/DashboardCrm.jsx'
+import SettingsDashboard from './SettingsDashboard/SettingsDashboard.jsx'
+import ThemeColorSetup from './SettingsDashboard/ThemeColorSetup.jsx'
 
 
-const CRMSkeleton = () =>{
+const SettingsSkeleton = () => {
 
     const {user, token} = useAuth();
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -40,13 +41,14 @@ const CRMSkeleton = () =>{
   console.log(":operatorrxxx",showcomponentouter)
     switch (showcomponent) {
         case 0:
-        return  <DashboardCrm />
+        return  <SettingsDashboard/>
         // <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/>;
         case 1:
-              if(showcomponentouter === 'Facebook'){
-                return <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
+          return  <ThemeColorSetup/>
+            //   if(showcomponentouter === 'Facebook'){
+            //     return <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
              
-              }
+            //   }
         
       default:
         return null;
@@ -153,22 +155,23 @@ const CRMSkeleton = () =>{
                      { pageview && renderComponent()}
                 </div>
             </div>
-            <style jsx>
-    {`
-   .page-transition {
-    opacity: 1;
-    transition: opacity 200ms ease-in-out;
-  }
-  
-  .page-transition.changing {
-    opacity: 0;
-    transition: opacity 200ms ease-in-out;
-  }
-    `}
+            <style >
+                {`
+              .page-transition {
+                opacity: 1;
+                transition: opacity 200ms ease-in-out;
+              }
+              
+              .page-transition.changing {
+                opacity: 0;
+                transition: opacity 200ms ease-in-out;
+              }
+                `}
 </style>
          
     </div>
   )
 }
 
-export default CRMSkeleton
+
+export default SettingsSkeleton

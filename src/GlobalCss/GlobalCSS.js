@@ -2,7 +2,7 @@ export  const global_css={
     'primary_bg':'#3A3F44',
     'primary_btn':'#27CF7A',
     'secondary_btn':'#1EAB5E',
-    'primary_txt_color':'rgba(255, 255, 255, 0.75)',
+    'primary_txt_color':'rgba(255, 255, 255, 0.85)',
     'secondary_txt_color':'rgba(255, 255, 255, 0.6)',
     'primary_inputfield':'#444444',
     'primary_card_bg':'#303038',
@@ -15,4 +15,18 @@ export  const global_css={
     'success_text_bg' : '#4DCC79',
     'success_bg' : '#4DCC79',
     'delete_text_bg' : '#E55245',
+
+
+    'shadowcolor':'#8cbfff',
+    'navbarBackColor':'#303038',
+    'homeBackColor':'#3A3F44',
+    'profileCardBackColor':'#444',
+    'profileArrowColor':'#2aea87',
+    'homeBackColor':'#3A3F44',
+    'leftMenuHoverColor':'rgba(39, 207, 122, 0.10)',
+    'leftMenuHoverTextColor':'#27CF7A',
+    'leftMenuBackColor':'#303038',
+    'mainPageBackColor':'#3A3F44',
+    'mainPageFrontColor':'#303038',
+    'dashboardBackColor':'whitesmoke'
 }

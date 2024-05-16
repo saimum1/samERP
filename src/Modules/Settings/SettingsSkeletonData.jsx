@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 import charticon from '../../assets/static/Chart.svg'
@@ -12,35 +13,59 @@ import datasetsicongreen from '../../assets/static/Datasetsgreen.svg'
 // import settingicongreen from '../../assets/static/Settinggreen.svg'
 // import usersquareicon from '../../assets/static/user-square.svg'
 // import usersquareicongreen from '../../assets/static/user-squaregreen.svg'
-// import offercentericongreen from '../../assets/static/offercentergreen.svg'
-// import offercentericon from '../../assets/static/offercenter.svg'
+import offercentericongreen from '../../assets/static/offercentergreen.svg'
+import offercentericon from '../../assets/static/offercenter.svg'
 // import simsell from '../../assets/static/sellsim.svg'
 // import simsellwhite from '../../assets/static/sellsimwhite.svg'
 
+
 export const dataset=[
-    {
-    'img':charticon,
-    'imgsec':charticongreen,
-    'name':'Dashboard',
+  {
+  'img':charticon,
+  'imgsec':charticongreen,
+  'name':'Dashboard',
+  'menu':[],
+  'code':0
+   },
+   {
+    'img':offercentericon,
+    'imgsec':offercentericongreen,
+    'name':'Theme Color',
     'menu':[],
-    'code':0
-     },
-     {
-        'img':datasetsicon,
-         'imgsec':datasetsicongreen,
-        'name':' Campaign',
-        'menu':[{name:'Facebook',code:'m1'},{name:'Instagram',code:'m2'},{name:'Linkedin',code:'m3'}],
-        'code':1
-            },
-             
+    'code':1
+     }, {
+      'img':charticon,
+      'imgsec':charticongreen,
+      'name':'Dashboard',
+      'menu':[],
+      'code':2
+       }, {
+        'img':charticon,
+        'imgsec':charticongreen,
+        'name':'Dashboard',
+        'menu':[],
+        'code':3
+         }, {
+          'img':charticon,
+          'imgsec':charticongreen,
+          'name':'Dashboard',
+          'menu':[],
+          'code':4
+           }, {
+            'img':charticon,
+            'imgsec':charticongreen,
+            'name':'Dashboard',
+            'menu':[],
+            'code':5
+             },
+           
 
 
 ]
 
 
-
 export default () => {
-    return (
-        <div>detail</div>
-    )
- }
+  return (
+      <div>detail</div>
+  )
+}

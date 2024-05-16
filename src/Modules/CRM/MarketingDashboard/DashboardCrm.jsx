@@ -1,5 +1,4 @@
 import React, { useState ,useEffect} from 'react';
-import AlertBox from '../../Components/AlertBox/AlertBox';
 import {Bar,ComposedChart, BarChart , Line, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,LabelList, CartesianGrid} from 'recharts';
 
 import { StatusOnlineIcon, SearchIcon } from "@heroicons/react/outline";
@@ -22,8 +21,9 @@ import {useDisclosure, Button} from "@chakra-ui/react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import moment from "moment/moment.js";
-import LoadingSoS from '../../Components/LoadingScreen/LoadingSoS';
 import { data } from './DataChartMkt';
+import LoadingSoS from '../../../Components/LoadingScreen/LoadingSoS';
+import { global_css } from '../../../GlobalCss/GlobalCSS';
 const DashboardCrm = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -101,7 +101,8 @@ const styles = {
   };
 
   return (
-    <div  className="flex justify-center h-full w-full items-center md:items-start bg-[#303038]  rounded-[3px]" >
+    <div  className="flex justify-center h-full w-full items-center md:items-start  rounded-[3px]" style={{backgroundColor:global_css.mainPageFrontColor
+    }}>
 
     {loader &&  <LoadingSoS  /> }
 
