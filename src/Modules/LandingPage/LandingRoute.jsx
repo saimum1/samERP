@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import CRMSkeleton from '../CRM/CRMSkeleton';
 import DashboardCrm from '../CRM/MarketingDashboard/DashboardCrm';
 import SettingsSkeleton from '../Settings/SettingsSkeleton';
+import HelpDeskSkeleton from '../HelpDesk/HelpDeskSkeleton';
 
 
 const LandingRoute = () => {
@@ -28,6 +29,9 @@ const LandingRoute = () => {
     const renderComponent = () => {
     
     switch (showcomponent) {
+
+      case 0:
+        return <HelpDeskSkeleton  />
        
         case 2:
         return <CRMSkeleton  />

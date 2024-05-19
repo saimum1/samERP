@@ -98,7 +98,7 @@ const Navabar = () => {
                         color:global_css.primary_txt_color ,fontFamily:"inter",fontWeight:"400" ,lineHeight:"15px",fontSize:"100%",paddingLeft:'16px'}}>
                                     RH Saimum
                             </div>
-                        <div style={{cursor:'pointer',display:'flex',justifyContent:'center' ,alignItems:'center' ,flex:'1',width:'100%' ,height:'100%',transition:'all 400ms'}} 
+                        <div style={{cursor:'pointer',display:'flex',justifyContent:'center' ,alignItems:'center' ,flex:'1',width:'100%' ,height:'100%',transition:'all 300ms'}} 
                           
                         >
                              <FontAwesomeIcon icon={faCaretDown} style={{color:global_css.profileArrowColor ,height:'25px' ,width:"25px",transition:'all 400ms'}} rotation={clicked && 180 || 0}/>
@@ -122,7 +122,7 @@ const Navabar = () => {
                                             top: "3.7rem",
                                             right: "3rem",
                                             zIndex: 1,
-                                            transition: "all 600ms"
+                                            transition: "all 500ms"
                                             }}
                                         >
                                             {clickedsec && data.map((item,index,array) => (
