@@ -10,6 +10,7 @@ import axios from "axios";
 import config from "../../config.jsx";
 import HelpDeskDashboard from './HelpDeskDashboard/HelpDeskDashboard.jsx'
 import Messenger from './HelpDeskDashboard/MessengerChat.jsx'
+import MessengerChatApp from './HelpDeskDashboard/MessengerChat/MessengerChatApp.jsx'
 
 
 
@@ -45,7 +46,7 @@ const HelpDeskSkeleton = () => {
         return  <HelpDeskDashboard/>
         // <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/>;
         case 1:
-          return <Messenger />
+          return <MessengerChatApp />
             //   if(showcomponentouter === 'Facebook'){
             //     return <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
              
