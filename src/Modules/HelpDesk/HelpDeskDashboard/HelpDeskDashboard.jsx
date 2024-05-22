@@ -102,24 +102,23 @@ const styles = {
   };
 
   return (
-    <div  className="flex justify-center h-full w-full items-center md:items-start  rounded-[3px]" style={{backgroundColor:global_css.mainPageFrontColor
+    <div  className="flex justify-center h-full w-full items-center md:items-start  rounded-[3px]" style={{backgroundColor:global_css.mainPageFrontColor,padding:'1rem 0'
     }}>
 
     {loader &&  <LoadingSoS  /> }
 
 
-  <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',flexDirection:'column',overflow:'auto'}}>
-        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%'}}>
-        <div style={styles.shadow}  ></div>
+  <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%',flexDirection:'column',overflow:'auto'}}>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}}>
+       
 
 
-            <div style={{textAlign: "center", marginLeft: '-80px', marginTop:"8%",display:'flex',flexDirection:'column',width:'100%'}}>
+            <div style={{textAlign: "center", marginLeft: '-80px',display:'flex',flexDirection:'column',width:'100%',height:'100%'}}>
         
 
-            <ResponsiveContainer width="100%" height={200} >
+            <ResponsiveContainer width="100%" height={250} style={{marginTop:'20rem'}}>
 
-                <BarChart width={730} height={250} data={data?.slice(-12)}  margin={{top: -60, right: 0, left: 65, bottom: 5,}}>
-                {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                <BarChart width="100%" height="100%" data={data?.slice(-12)}  margin={{top: 0, right: 0, left: 65,}}>
                 <XAxis padding={{ left: 40 , right:30 }} 
                         tick={{ fill: 'white', cursor: 'pointer', fontSize:'12px', fontWeight:'bold' }}
                         dataKey="month_name"
@@ -149,11 +148,11 @@ const styles = {
 
 
 
-            <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%'}}>
+            <div style={{display:'flex',justifyContent:'space-evenly',alignItems:'center',width:'100%'}}>
    
 
 
-                <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'100%'}}>
+                <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'50%'}}>
             
 
                     <ResponsiveContainer width="100%" height={300} >
@@ -174,7 +173,7 @@ const styles = {
                 </div>
 
 
-                <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'100%'}}>
+                <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'50%'}}>
             
 
             <ResponsiveContainer width="100%" height={300} >
@@ -193,53 +192,68 @@ const styles = {
 
 
 
-        </div>
-
-
-        <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'100%'}}>
-            
-
-            <ResponsiveContainer width="100%" height={300} >
-
-            <RadarChart outerRadius={90} width={730} height={250} data={servicedata} style={{fontSize:'12px'}}>
-            <PolarGrid />
-            <Tooltip  />
-
-            <PolarAngleAxis dataKey="subject" />
-            <PolarRadiusAxis angle={30} domain={[0, 150]} />
-            <Radar name="Spam" dataKey="A" stroke="#E51400" fill="#E51400" fillOpacity={0.6} />
-            <Legend />
-            </RadarChart>
-                
-            </ResponsiveContainer> 
+                 </div>
 
 
 
-        </div>
 
-
-
-        <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'100%'}}>
-            
-
-            <ResponsiveContainer width="100%" height={300} >
-
-            <RadarChart outerRadius={90} width={730} height={250} data={servicedata} style={{fontSize:'12px'}}>
-            <PolarGrid />
-            <Tooltip />
-
-            <PolarAngleAxis dataKey="subject" />
-            <PolarRadiusAxis angle={30} domain={[0, 150]} />
-            <Radar name="Curious" dataKey="A" stroke="#e5e057" fill="#e5e057" fillOpacity={0.6} />
-            <Legend />
-            </RadarChart>
-                
-            </ResponsiveContainer> 
-
-
-
-        </div>
             </div>
+
+
+
+
+                    <div style={{display:'flex',justifyContent:'space-evenly',alignItems:'center',width:'100%'}}>
+        
+
+
+
+
+                        <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'50%'}}>
+                            
+
+                            <ResponsiveContainer width="100%" height={300} >
+
+                            <RadarChart outerRadius={90} width={730} height={250} data={servicedata} style={{fontSize:'12px'}}>
+                            <PolarGrid />
+                            <Tooltip  />
+
+                            <PolarAngleAxis dataKey="subject" />
+                            <PolarRadiusAxis angle={30} domain={[0, 150]} />
+                            <Radar name="Spam" dataKey="A" stroke="#E51400" fill="#E51400" fillOpacity={0.6} />
+                            <Legend />
+                            </RadarChart>
+                                
+                            </ResponsiveContainer> 
+
+
+
+                        </div>
+
+
+
+                        <div style={{textAlign: "center", marginLeft: '0px', marginTop:"0%",display:'flex',flexDirection:'column',width:'100%',height:'50%'}}>
+                            
+
+                            <ResponsiveContainer width="100%" height={300} >
+
+                            <RadarChart outerRadius={90} width={730} height={250} data={servicedata} style={{fontSize:'12px'}}>
+                            <PolarGrid />
+                            <Tooltip />
+
+                            <PolarAngleAxis dataKey="subject" />
+                            <PolarRadiusAxis angle={30} domain={[0, 150]} />
+                            <Radar name="Curious" dataKey="A" stroke="#e5e057" fill="#e5e057" fillOpacity={0.6} />
+                            <Legend />
+                            </RadarChart>
+                                
+                            </ResponsiveContainer> 
+
+
+
+                        </div>
+
+
+                  </div>
     </div>
     <style jsx>
         {`body::-webkit-scrollbar {

@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 import React, { useState ,useEffect,useRef} from 'react';
 import {Bar,ComposedChart, BarChart , Line, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,LabelList, CartesianGrid} from 'recharts';
 
@@ -25,6 +32,7 @@ import LoadingSoS from '../../../../Components/LoadingScreen/LoadingSoS'
 import { global_css } from '../../../../GlobalCss/GlobalCSS';
 import UseAvatar from './UseAvatar';
 import messengericon from '../../../../assets/static/messenger.svg'
+import Popnotification from '../../../../Components/PopNotification/Popnotification';
 const MessengerChatApp = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -33,7 +41,9 @@ const MessengerChatApp = () => {
     const [alertText, setAlertText] = useState('');
     const [alertButtonText, setAlertButtonText] = useState('');
     const [alertButtonTextSecond, setAlertButtonTextSecond] = useState('');
-
+    const [showpopoup,setshowpopup]=useState(false)
+    const [showpopoupstatus,setshowpopupstatus]=useState('sucess')
+    const [showpopoupmsg,setshowpopupmsg]=useState('')
 
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState('');
@@ -298,28 +308,34 @@ const MessengerChatApp = () => {
     };
 
     const getMessengerConfig = () => {
-        setCusLoading(true);
-        setCusLoadingType('loading');
-        setCusLoadingText('Messenger is syncing...');
 
-        axios.get(`${apiUrl}/api/v1/batchProcess/getMessengerConfig`, { params: { companyId } })
-            .then((response) => {
-                console.log("get Messenger Config", response.data.data);
-                const responseData = response.data.data;
-                console.log("responseData.id", responseData.id);
-                saveMessangerData(responseData.pageId, responseData.accessToken);
+        let x={
+            msg:'Message synced successfully',
+            status:'success'
+        }
+        notificationopens(x)
+        // setCusLoading(true);
+        // setCusLoadingType('loading');
+        // setCusLoadingText('Messenger is syncing...');
 
-                setId(responseData.id);
-                setAppId(responseData.appId);
-                setPageId(responseData.pageId);
-                setPageName(responseData.pageName);
-                setClientSecret(responseData.clientSecret);
-                setGrantType(responseData.grantType);
-                setAccessToken(responseData.accessToken);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        // axios.get(`${apiUrl}/api/v1/batchProcess/getMessengerConfig`, { params: { companyId } })
+        //     .then((response) => {
+        //         console.log("get Messenger Config", response.data.data);
+        //         const responseData = response.data.data;
+        //         console.log("responseData.id", responseData.id);
+        //         saveMessangerData(responseData.pageId, responseData.accessToken);
+
+        //         setId(responseData.id);
+        //         setAppId(responseData.appId);
+        //         setPageId(responseData.pageId);
+        //         setPageName(responseData.pageName);
+        //         setClientSecret(responseData.clientSecret);
+        //         setGrantType(responseData.grantType);
+        //         setAccessToken(responseData.accessToken);
+        //     })
+        //     .catch((error) => {
+        //         console.log("error", error);
+        //     });
     };
 
     const saveMessangerData = (pageId, accessToken) => {
@@ -549,6 +565,20 @@ const MessengerChatApp = () => {
 	};
 
 
+
+    const notificationopens=(e)=>{
+
+
+        setshowpopupmsg(e?.msg)
+        setshowpopupstatus(e?.status)
+        setshowpopup(true)
+
+        setTimeout(() => {
+            setshowpopup(false)
+        }, 3000);
+    }
+
+
     useEffect(() => {
         getMessangerData();
 
@@ -568,38 +598,19 @@ const MessengerChatApp = () => {
     }}>
 
     {loader &&  <LoadingSoS  /> }
+          {showpopoup &&  <Popnotification  msg={showpopoupmsg} showpopoup={showpopoup} status={showpopoupstatus} /> } 
 
 
   
-    <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}}>
 
-
-    <div id="mainDiv" className="mainDiv" style={{width:"100%",height:"100%"}}>
-					<div container style={{ margin: "62px 0px 40px 0px" }}>
-						
-
-						<div item xs={10}>
-							<div className="__main">
-								<div className="main__chatbody"   style={{boxShadow:'1px 1px 1rem #b5a8a8'}}>
-									<div className="main__chatlist"> 
-										<div container spacing={24}>
-											
-												<div item xs={12} style={{ marginTop: "16px"}} >
-													<div className="app__name" style={{display:"flex"}}>
-													
-														<p style={{ marginTop: "0px", marginBottom: "0px", fontSize: '20px', top: "0px", bottom: "0px" }}> <b>Chat App</b>
-                                                        <img src={messengericon} style={{ height: "18px", width: "18px", position: "relative", top: "0px", marginLeft: "8px", marginBottom: "0px", color: "#006AFF", }}/>
-                                                        
-                                                            {/* <FontAwesomeIcon icon={faFacebookMessenger} style={{ height: "18px", width: "18px", position: "relative", top: "0px", marginLeft: "8px", marginBottom: "0px", color: "#006AFF", }} /> */}
-														</p>
+    <div   style={{width:"100%",height:"100%",backgroundColor:global_css.mainPageFrontColor,color:global_css.primary_txt_color}}>	
+								<div className="main__chatbody"   style={{width:"100%",height:"100%",}}>
+									<div className="main__chatlist" style={{height:"100%",borderRight:`1px solid ${global_css.secondary_txt_color}`}}> 
+													<div  style={{display:"flex",width:'100%',justifyContent:'flex-start',alignItems:'center'}}>
+														<span style={{fontSize:'18px',fontWeight:'600'}}>Chat App</span>
+                                                        <span>   
+                                                             <img src={messengericon} style={{ height: "18px", width: "18px", position: "relative", top: "0px", marginLeft: "8px", marginBottom: "0px", }}/></span>
 													</div>
-												</div>
-
-												
-											
-										</div>
-
-
 										<div style={{display:'flex' ,flexDirection:'column' ,paddingLeft:'' ,backgroundColor:'' ,marginTop:"4px" ,gap:'4px',fontSize:'12px'}}>
 														<div style={{display:'flex' ,justifyContent:'flex-start' ,alignItems:'center' }}>
 															<span>Api token expire date : <span style={{color:'#FF5555' ,fontSize:'13px'}}>{tokenexpirydate && moment(tokenexpirydate).format('DD-MMM-YYYY')} </span></span>
@@ -611,12 +622,14 @@ const MessengerChatApp = () => {
 														</div>
 
 														<div>
-															<p style={{ fontSize: "14px" ,display:'flex',justifyContent:'space-between'}}>
-																	<b>Conversations 
-																	'll'
-																		</b>
+															<p style={{ fontSize: "14px" ,display:'flex',justifyContent:'space-between',color:global_css.primary_txt_color}}>
+																Conversations 
+																	121
+																	
 
-													<FontAwesomeIcon onClick={() => getMessengerConfig()} title="Click to Refresh" icon={faRetweet} style={{ width: "25px", color: "black", cursor: "pointer" }} /> 
+													<FontAwesomeIcon 
+                                                    onClick={() => getMessengerConfig()}
+                                                     title="Click to Refresh" icon={faRetweet} style={{ width: "25px", color: global_css.primary_txt_color, cursor: "pointer" }} /> 
 
 																</p>
 
@@ -631,17 +644,17 @@ const MessengerChatApp = () => {
 															<div style={{width:'5%' ,backgroundColor:'grey' ,height:'1px'}}></div>
 																
 															<div style={{width:'33.33%'}}>Search by</div>
-															<div style={{width:'20%' ,backgroundColor:'grey' ,height:'1px'}}></div>
-																	<div style={{display:"flex" ,justifyContent:'center' ,alignItems:'center' ,textAlign:'center' ,width:'33.33%' ,height:'100%'}}>
-																	<input type="radio" id="Name" name="filteroption" value="Name"  style={{width:'13px'}} onChange={handleOptionChange}/>
-																	 <label for="html" style={{paddingBottom:'4px'}}>Name</label>
+															<div style={{width:'10%' ,backgroundColor:'grey' ,height:'1px'}}></div>
+																	<div style={{display:"flex",gap:'2px' ,justifyContent:'center' ,alignItems:'center' ,textAlign:'center' ,width:'33.33%' ,height:'100%'}}>
+																	<input type="radio" id="Name" name="filteroption" value="Name"  style={{width:'13px',color:global_css.primary_txt_color}} onChange={handleOptionChange}/>
+																	 <label for="html" style={{paddingBottom:'8px'}}>Name</label>
 																	 </div>
+ 
 
 
-
-																	 <div style={{display:"flex" ,justifyContent:'center' ,alignItems:'center' ,textAlign:'center' ,width:'33.33%' ,height:'100%'}}>
-																	<input type="radio" id="Month" name="filteroption" value="Month"   style={{width:'13px'}} onChange={handleOptionChange} checked={filterByMonth === true}/>
-																	 <label for="html" style={{paddingBottom:'4px'}}>Month</label>
+																	 <div style={{display:"flex",gap:'2px' ,justifyContent:'center' ,alignItems:'center' ,textAlign:'center' ,width:'33.33%' ,height:'100%'}}>
+																	<input type="radio" id="Month" name="filteroption" value="Month"   style={{width:'13px',color:global_css.primary_txt_color}} onChange={handleOptionChange} checked={filterByMonth === true}/>
+																	 <label for="html" style={{paddingBottom:'8px'}}>Month</label>
 																	 </div>
 
 																	
@@ -654,16 +667,15 @@ const MessengerChatApp = () => {
 
 										{filterByName === true ? 
 										<div className="chatList__search" style={{display:'flex' ,justifyContent:'center' ,alignItems:'center'}}>
-											<div className="search_wrap" style={{flex:'100%'}}>
+											<div  style={{flex:'100%'}}>
 												<input type="text"  value={filterByName}
-												// onChange={(event) =>handleFilterOptions(event)} 
 												onKeyDown={(e) => {
 													if (e.key === 'Enter') {
                                                         filterData();
 													}
 												  }}
 												onChange={(e)=> setFilterByName(e.target.value)}
-												placeholder="Search Here" required  style={{height:'0.8rem'}} />
+												placeholder="Search Here"   style={{height:'1.5rem',color:'black'}} />
 
 											</div>
 											<div style={{flex:'2%' ,cursor:'pointer'}} onClick={()=>filterData()}>
@@ -688,9 +700,9 @@ const MessengerChatApp = () => {
 											{filterByMonth === true ?  
 
 										
-												<div style={{display:"flex" ,width:"100%" }}>
+												<div style={{display:"flex" ,width:"100%",color:'black',fontSize:'12px' }}>
 												   <select
-														style={{ width: '100%', height: '1.2rem', borderRadius: '5px',color:yearTextColor }}
+														style={{ width: '100%', height: '1.3rem', borderRadius: '5px',color:yearTextColor }}
 														value={selectedYear}
 														onChange={(event) => handleEventChange(event.target.value, 'year')}>
                                                             
@@ -702,7 +714,7 @@ const MessengerChatApp = () => {
 														</select>
 
 													<select
-														style={{ width: '100%', height: '1.2rem', margin:'0px 2px',borderRadius: '5px',color:monthTextColor }}
+														style={{ width: '100%', height: '1.3rem', margin:'0px 2px',borderRadius: '5px',color:monthTextColor }}
 														value={selectedMonth}
 														onChange={(event) =>handleEventChange(event.target.value, 'month')}
 														>
@@ -721,7 +733,7 @@ const MessengerChatApp = () => {
 													title="Search"
 													icon={faSearch}
 												/> */}
-                                                <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => getspecificdatedata()}/>
+                                                <FontAwesomeIcon icon={faMagnifyingGlass} style={{color:global_css.primary_txt_color}} onClick={() => getspecificdatedata()}/>
 												</div> 
 
 													</div>: null
@@ -734,10 +746,10 @@ const MessengerChatApp = () => {
 			
 
 
-                                        <div className="chatlist__items">
+                                        <div className="chatlist__items" >
 											
                                             {chat?.map((item, key) => (
-                                                <div
+                                                <div style={{borderBottom:`1px solid ${global_css.secondary_txt_color}`}}
                                                     onClick={() => openUserMessages(item.from_id,item.from_name,)}
                                                     value={item.from_id}
                                                     // style={{
@@ -748,7 +760,7 @@ const MessengerChatApp = () => {
                                                     } `}	
                                                 >
                                                     <div className="userMeta" value={item.from_id} >
-                                                        <p style={{display:'flex'}} >
+                                                        <p style={{display:'flex',color:global_css.primary_txt_color}} >
                                                         {previousLeadInfo.map((i) => {
                                                             if (i.from_id == item.from_id) {
                                                             return(
@@ -759,10 +771,10 @@ const MessengerChatApp = () => {
                                                             {item.from_name}{individualConversationsCount.map((i) => {
                                                             if (i.from_id == item.from_id) {
                                                             return(
-                                                                <p style={{position:'relative'}} >({i.count})</p>
+                                                                <p style={{position:'relative',color:global_css.primary_txt_color}} >({i.count})</p>
                                                             )}})}
                                                         </p>
-                                                        <span className="activeTime">
+                                                        <span className="activeTime" style={{color:global_css.secondary_txt_color}}>
                                                             {moment(item.updated_time).format( "YYYY/MM/DD h:mma", )}
                                                         </span>
                                                     </div>
@@ -790,7 +802,7 @@ const MessengerChatApp = () => {
 										<div className="blocks">
 											<>
 												<div className="current-chatting-user">
-													<p>
+													<p style={{color:global_css.primary_txt_color}}>
 														<strong>{userName}</strong>
 													</p>
 												</div>
@@ -1068,11 +1080,11 @@ const MessengerChatApp = () => {
 								</>:null }					
 									
 								</div>
-							</div>
-						</div>
-					</div>
+						
+					
+				
 				</div>
-        </div>
+      
 
     <style jsx>
         {`body::-webkit-scrollbar {
@@ -1110,77 +1122,8 @@ scrollbar-color: transparent transparent;
 
 
 
-        .my-component {
-            position: relative;
-            
-        }
-        
-        .uid {
-            position: relative;
-            cursor: pointer;
-            
-        }
-        
-        .tooltip {
-            visibility: hidden;
-            width: auto;
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 5px;
-            border-radius: 6px;
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            white-space: nowrap;
-        }
-        
-        .uid:hover .tooltip {
-            visibility: visible;
-        }
-
-        .copied-message {
-            position: absolute;
-            top: 0%;
-            left: 40%;
-            transform: translate(-50%, -50%);
-            background-color: #000;
-            color: #fff;
-            padding: 5px;
-            border-radius: 4px;
-            z-index: 9999; /* Ensure the message is on top */
-        }
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        .nav {
-            max-width: 100px;
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            padding: 0 25px;
-            padding-top: 30px;
-        }
-        .nav img {
-            display: block;
-            max-width: 100%;
-            cursor: pointer;
-        }
 
         .main__chatlist {
-            border-right: 1px solid #ebe7fb;
             padding: 0 40px 0 0px;
         }
         .chatlist__heading {
@@ -1189,60 +1132,23 @@ scrollbar-color: transparent transparent;
             align-items: center;
             margin-top: 0px;
         }
-        .btn-nobg {
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 10px;
-            color: #dad9dd;
-            outline: none;
-        }
-        .search_wrap {
-            background-color: #e6e5ea;
-            border-radius: 5px;
-        }
-        .search_wrap input {
-            background-color: transparent;
-            border: none;
-            padding:1px 8px;
-            outline: none;
-            width: 80%;
-            padding-right: 0;
-        }
-        .search-btn {
-            height: 46px;
-            border: none;
-            background-color: transparent;
-            outline: none;
-            width: 20%;
-            cursor: pointer;
-            font-size: 20px;
-        }
+      
         .chatlist__items {
             transition:all 300ms;
-            max-width: calc(100vh - calc(100vh / 2));
+            width:15vw;
             margin-top: 9px;
             overflow: auto;
-            //  max-height: calc(100vh - calc(100vh / 2));
-            height:100%
+            height:70%;
 
         }
 
-        // .chatlist__items.expanded {
-        // 	transition:all 300ms;
-        // 	height: 20rem;
-
-        // }
-
+      
         .chat__item me .chat__item__content {
             z-index: -1;
         }
 
         .chatlist__item {
             display: flex;
-            border-bottom: 1px solid #ebe7fb;
             padding-bottom: 10px;
             margin-top: 10px;
             cursor: pointer;
@@ -1274,10 +1180,7 @@ scrollbar-color: transparent transparent;
             margin-top: 0;
         }
 
-        .chatlist__item:hover {
-            background-color: #f5f5f5;
-        }
-
+    
 
         .avatar {
             width: 40px;
@@ -1312,23 +1215,10 @@ scrollbar-color: transparent transparent;
             display: block;
         }
 
-        // .optionMenu{
-        //   position: absolute;
-        //   top: 0;
-        //   right: 0;
-        //   width: 40px;
-        //   height: 40px;
-        //   background-color: #fff;
-        //   border-radius: 50%;
-        //   display: flex;
-        //   justify-content: center;
-        //   align-items: center;
-        //   cursor: pointer;
-        // }
 
         .chatlist__item:hover,
         .chatlist__item.active {
-            background: #fff;
+            background: #2F423F;
             border-radius: 10px;
         }
 
@@ -1361,12 +1251,12 @@ scrollbar-color: transparent transparent;
             flex-grow: 1;
             padding: 20px 40px;
             max-width: 100%;
-            border-right: 1px solid #ebe7fb;
+            border-right: 1px solid ${global_css.secondary_txt_color};
             position: relative;
         }
         .content__header {
             padding-bottom: 15px;
-            border-bottom: 1px solid #ebe7fb;
+            border-bottom: 1px solid  ${global_css.secondary_txt_color};
         }
         .current-chatting-user {
             display: flex;
@@ -1522,24 +1412,14 @@ scrollbar-color: transparent transparent;
         }
 
         .main__chatbody {
-            flex-grow: 1;
-            background-color: #f4f3f8;
+            // background-color: #f4f3f8;
             border-radius: 10px;
-            padding: 15px 20px;
+            padding: 15px 22px;
             display: flex;
+            // font-color: #f4f3f8;
         }
 
-        .__main:hover {
-            box-shadow:1px 1px 1.5rem  #97d8ef;
-        }
-
-        .__main {
-            min-height: 80vh;
-            width: 98%;
-            border-radius: 10px;
-            display: flex;
-            margin-top:1rem;
-        }
+      
 
         .btn {
             background-color: #fff;
