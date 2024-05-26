@@ -162,7 +162,7 @@ const styles = {
                     <Tooltip />
                     <PolarAngleAxis dataKey="subject" />
                     <PolarRadiusAxis angle={30} domain={[0, 150]} />
-                    <Radar name="Service Request" dataKey="A" stroke="#6A00FF" fill="#6A00FF" fillOpacity={0.6} />
+                    <Radar name="Service Request" dataKey="A" stroke="#6A00FF" fill={"#6A00FF"}  fillOpacity={0.6} />
                     <Legend />
                     </RadarChart>
                         

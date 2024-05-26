@@ -10,6 +10,8 @@ import axios from "axios";
 import config from "../../config.jsx";
 import SettingsDashboard from './SettingsDashboard/SettingsDashboard.jsx'
 import ThemeColorSetup from './SettingsDashboard/ThemeColorSetup.jsx'
+import MessengerSetup from './SettingsDashboard/MessengerSetup.jsx'
+import CloudCdnSettings from './SettingsDashboard/CloudCdnSettings.jsx'
 
 
 const SettingsSkeleton = () => {
@@ -45,6 +47,12 @@ const SettingsSkeleton = () => {
         // <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/>;
         case 1:
           return  <ThemeColorSetup/>
+
+          case 2:
+            return  <MessengerSetup/>  
+
+            case 3:
+              return  <CloudCdnSettings/>  
             //   if(showcomponentouter === 'Facebook'){
             //     return <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
              
@@ -102,7 +110,7 @@ const SettingsSkeleton = () => {
                                             }
                                             }}
                                         >
-                                          <span><img src={ (hoveredIndex === index || selectedIndex === index) ? n.imgsec : n.img}  style={{width:'100%',height:'100%'}}/></span>                         
+                                          <span><img src={ (hoveredIndex === index || selectedIndex === index) ? n.imgsec : n.img}  style={{width:'24px',height:'24px'}}/></span>                         
                                         <span style={{color: (hoveredIndex === index || selectedIndex === index) ? global_css.leftMenuHoverTextColor : global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px'}}>{n.name}</span>
                                         {n.menu.length>0?
                                       

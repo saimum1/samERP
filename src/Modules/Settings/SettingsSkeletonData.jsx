@@ -15,6 +15,8 @@ import datasetsicongreen from '../../assets/static/Datasetsgreen.svg'
 // import usersquareicongreen from '../../assets/static/user-squaregreen.svg'
 import offercentericongreen from '../../assets/static/offercentergreen.svg'
 import offercentericon from '../../assets/static/offercenter.svg'
+import messengericon from '../../assets/static/messenger.svg'
+import keycdnicon from '../../assets/static/keycdn.svg'
 // import simsell from '../../assets/static/sellsim.svg'
 // import simsellwhite from '../../assets/static/sellsimwhite.svg'
 
@@ -34,15 +36,15 @@ export const dataset=[
     'menu':[],
     'code':1
      }, {
-      'img':charticon,
-      'imgsec':charticongreen,
-      'name':'Dashboard',
+      'img':messengericon,
+      'imgsec':messengericon,
+      'name':'Messenger Setup',
       'menu':[],
       'code':2
        }, {
-        'img':charticon,
-        'imgsec':charticongreen,
-        'name':'Dashboard',
+        'img':keycdnicon,
+        'imgsec':keycdnicon,
+        'name':'Cloud Settings',
         'menu':[],
         'code':3
          }, {

@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 import React, { useState ,useEffect,useRef} from 'react';
 import {Bar,ComposedChart, BarChart , Line, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,LabelList, CartesianGrid} from 'recharts';
 
@@ -33,6 +27,7 @@ import { global_css } from '../../../../GlobalCss/GlobalCSS';
 import UseAvatar from './UseAvatar';
 import messengericon from '../../../../assets/static/messenger.svg'
 import Popnotification from '../../../../Components/PopNotification/Popnotification';
+import CustomEditors from '../../../../Components/EditFunctionality/CustomEditors';
 const MessengerChatApp = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -44,7 +39,9 @@ const MessengerChatApp = () => {
     const [showpopoup,setshowpopup]=useState(false)
     const [showpopoupstatus,setshowpopupstatus]=useState('sucess')
     const [showpopoupmsg,setshowpopupmsg]=useState('')
-
+    const [showedit,setshowedit]=useState(false)
+    const [showeditindex,setshoweditindex]=useState(null)
+    const [selecteditem,setselecteditem]=useState(null)
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState('');
     const [lastYearList, setLastYearList] = useState([]);
@@ -579,6 +576,26 @@ const MessengerChatApp = () => {
     }
 
 
+
+    const getaction=(e)=>{
+        console.log('action',selecteditem)
+        if(e.type === 'edit'){
+            GetSimForUpdate(selecteditem)
+
+
+                
+
+        }else if(e.type === 'delete'){
+            onAlertOpen();
+            setAlertType('')
+            setAlertText('Are you sure you want to delete this data?');
+            setAlertButtonText('Yes, Delete')
+            setAlertButtonTextSecond('Cancel')
+            setactiontype(false)
+        }
+
+    }
+
     useEffect(() => {
         getMessangerData();
 
@@ -603,26 +620,26 @@ const MessengerChatApp = () => {
 
   
 
-    <div   style={{width:"100%",height:"100%",backgroundColor:global_css.mainPageFrontColor,color:global_css.primary_txt_color}}>	
-								<div className="main__chatbody"   style={{width:"100%",height:"100%",}}>
-									<div className="main__chatlist" style={{height:"100%",borderRight:`1px solid ${global_css.secondary_txt_color}`}}> 
+    <div   style={{width:"100%",height:"100%",backgroundColor:global_css.mainPageFrontColor,color:global_css.primary_txt_color}} className=" rounded-[3px]">	
+								<div className="main__chatbody"   style={{width:"100%",height:"100%",display:'flex',justifyContent:'flex-start',alignItems:'center'}}>
+									<div className="main__chatlist" style={{height:"100%",borderRight:`1px solid ${global_css.secondary_txt_color}`,flex:2}}> 
 													<div  style={{display:"flex",width:'100%',justifyContent:'flex-start',alignItems:'center'}}>
 														<span style={{fontSize:'18px',fontWeight:'600'}}>Chat App</span>
                                                         <span>   
                                                              <img src={messengericon} style={{ height: "18px", width: "18px", position: "relative", top: "0px", marginLeft: "8px", marginBottom: "0px", }}/></span>
 													</div>
-										<div style={{display:'flex' ,flexDirection:'column' ,paddingLeft:'' ,backgroundColor:'' ,marginTop:"4px" ,gap:'4px',fontSize:'12px'}}>
+										<div style={{display:'flex' ,flexDirection:'column' ,paddingLeft:'' ,backgroundColor:'' ,marginTop:"4px" ,gap:'14px',fontSize:'12px'}}>
 														<div style={{display:'flex' ,justifyContent:'flex-start' ,alignItems:'center' }}>
-															<span>Api token expire date : <span style={{color:'#FF5555' ,fontSize:'13px'}}>{tokenexpirydate && moment(tokenexpirydate).format('DD-MMM-YYYY')} </span></span>
+															<span style={{color:global_css.secondary_txt_color}}>Api token expire date : <span style={{color:'#FF5555' ,fontSize:'13px'}}>{tokenexpirydate && moment(tokenexpirydate).format('DD-MMM-YYYY')} </span></span>
 														</div>
 
 
 														<div style={{display:'flex' ,justifyContent:'flex-start' ,alignItems:'center' }}>
-															<span>Last data syncronize : <span >{lastUpdatedEmployee && moment(lastUpdate).add(6,'hours').format("YYYY/MM/DD h:mma")} </span></span>
+															<span style={{color:global_css.secondary_txt_color}}>Syncronized : <span >{lastUpdatedEmployee && moment(lastUpdate).add(6,'hours').format("YYYY/MM/DD h:mma")} </span></span>
 														</div>
 
 														<div>
-															<p style={{ fontSize: "14px" ,display:'flex',justifyContent:'space-between',color:global_css.primary_txt_color}}>
+															<p style={{ fontSize: "14px" ,display:'flex',justifyContent:'space-between',color:global_css.secondary_txt_color}}>
 																Conversations 
 																	121
 																	
@@ -666,16 +683,17 @@ const MessengerChatApp = () => {
 										
 
 										{filterByName === true ? 
-										<div className="chatList__search" style={{display:'flex' ,justifyContent:'center' ,alignItems:'center'}}>
+										<div className="chatList__search" style={{display:'flex' ,justifyContent:'center' ,alignItems:'center',gap:'4px'}}>
 											<div  style={{flex:'100%'}}>
-												<input type="text"  value={filterByName}
+												<input type="text"  
+                                                // value={filterByName}
 												onKeyDown={(e) => {
 													if (e.key === 'Enter') {
                                                         filterData();
 													}
 												  }}
-												onChange={(e)=> setFilterByName(e.target.value)}
-												placeholder="Search Here"   style={{height:'1.5rem',color:'black'}} />
+												// onChange={(e)=> setFilterByName(e.target.value)}
+												placeholder="Search Here"   style={{height:'1.5rem',color:'black',width:'100%',paddingLeft:'3px'}} />
 
 											</div>
 											<div style={{flex:'2%' ,cursor:'pointer'}} onClick={()=>filterData()}>
@@ -700,7 +718,7 @@ const MessengerChatApp = () => {
 											{filterByMonth === true ?  
 
 										
-												<div style={{display:"flex" ,width:"100%",color:'black',fontSize:'12px' }}>
+												<div style={{display:"flex" ,width:"100%",color:'black',fontSize:'12px',gap:'4px' }}>
 												   <select
 														style={{ width: '100%', height: '1.3rem', borderRadius: '5px',color:yearTextColor }}
 														value={selectedYear}
@@ -746,10 +764,10 @@ const MessengerChatApp = () => {
 			
 
 
-                                        <div className="chatlist__items" >
+                                        <div className="chatlist__items"  style={{width:'100%'}}>
 											
                                             {chat?.map((item, key) => (
-                                                <div style={{borderBottom:`1px solid ${global_css.secondary_txt_color}`}}
+                                                <div style={{borderBottom:`1px solid ${global_css.secondary_txt_color}` ,width:'100%'}}
                                                     onClick={() => openUserMessages(item.from_id,item.from_name,)}
                                                     value={item.from_id}
                                                     // style={{
@@ -794,10 +812,12 @@ const MessengerChatApp = () => {
 
 
 									</div>
+
+                                    <div style={{flex:9,height:'100%'}}>
 									{mainChatDiv == false? 
 									<>
 										{/* Chat Content Area */}
-									<div className="main__chatcontent">
+									<div className="main__chatcontent" >
 									<div className="content__header">
 										<div className="blocks">
 											<>
@@ -833,7 +853,7 @@ const MessengerChatApp = () => {
 												style={{ animationDelay: `0.8s` ,paddingTop:'15px' }}
 												className={`chat__item}`}
 											>
-												{textContents.map((item) => {
+												{textContents.map((item,index) => {
 													if (item.from_name !== "Sheraspace") {
 														return (
 															<div item xs={12} style={{paddingTop:'12px'}}>
@@ -870,95 +890,9 @@ const MessengerChatApp = () => {
 																		</div>
 																	</div>
 																</div>
-																<div item xs={1} style={{marginBottom: "8%"}}>
-																<div className="moreOptions" >
-																		<span>
-																			<img src={'moreOptions'} onClick={() => showActionModal( item.message_id, ) } title="More options" style={{ cursor: "pointer", color: "#545353", height: '32px', }}></img>
-																			{modal === item.message_id ? (
-																				// <>
-																				// 	<div
-																				// 		onClick={() => this.closeActionModal() }
-																				// 		style={{ position: "fixed", width: "100%", height: "100%", zIndex: "1", transition: "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 153ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", transform: "scale(1, 1) translateZ(0px)", top: "0", left: "0", right: "0", bottom: "0", margin: "auto", }}
-																				// 	/>
-																				// 	<div
-																				// 		className={card.actionPopupCss}
-																				// 		style={{ top: "-2rem", right: "75px", width: "fit-content",position:'fixed'}}
-																				// 	>
-																				// 		<p
-																				// 			onClick={()=> {openPopUpDynamic('popupServiceRequest', 93); this.popUpChange(); this.onHoldServiceRequestData(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id ,item.message_date);}}
-																				// 			className={card.actionIconHover}
-																				// 			style={{ textAlign: "left", marginTop: "0px", marginBottom: "-2px", fontSize: "12px", }}
-																				// 		>
-																				// 			<span className={card.actionIcon} >
-																				// 				<img src={serviceRequestImg} className={card.actionIcon} title="Service Request" style={{ width: "14px", color: "#545353", marginRight: "8px", marginTop:"0px", cursor: "pointer", }}></img>
-																				// 				Service Request
-																				// 			</span>
-																				// 		</p>
-																				// 		<p
-																				// 			onClick={()=> {openPopUpDynamic('popupOnHoldServiceRequest', 93); this.popUpChange(); this.onHoldServiceRequestData(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id,item.message_date);}}
-																				// 			className={card.actionIconHover}
-																				// 			style={{ textAlign: "left", marginBottom: "2px", marginTop: "0", fontSize: "12px", }}
-																				// 		>
-																				// 			<span className={card.actionIcon} >
-																				// 				<FontAwesomeIcon className={card.actionIcon} title="On-Hold Service Request" icon={faPause} style={{ marginTop: "10px", width: "13px", color: "#545353", marginRight: "8px", cursor: "pointer", }} />
-																				// 				On-Hold Service Request
-																				// 			</span>
-																				// 		</p>
-																				// 		<p
-																				// 			onClick={() => { this.openProblemIncident(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id,item.message_date); }}
-																				// 			className={card.actionIconHover}
-																				// 			style={{ textAlign: "left", marginBottom: "2px", marginTop: "0", fontSize: "12px", }}
-																				// 		>
-																				// 			<span
-																				// 				className={card.actionIcon}
-																				// 			>
-																				// 				<FontAwesomeIcon className={card.actionIcon} title="Incident" icon={faExclamationCircle} style={{ marginTop: "10px", width: "13px", color: "#545353", marginRight: "8px", cursor: "pointer", }} />
-																				// 				Incident
-																				// 			</span>
-																				// 		</p>
-																				// 		<p
-																				// 			onClick={() => { this.openProblemIncident(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id,item.message_date); }}
-																				// 			className={card.actionIconHover}
-																				// 			style={{ textAlign: "left", marginBottom: "0px", marginTop: "0", fontSize: "12px", }}
-																				// 		>
-																				// 			<span className={card.actionIcon} >
-																				// 				<FontAwesomeIcon
-																				// 					className={card.actionIcon} title="Problem" icon={faExclamationTriangle} style={{ marginTop: "10px", width: "13px", color: "#545353", marginRight: "8px", cursor: "pointer",
-																				// 					}}
-																				// 				/>
-																				// 				Problem
-																				// 			</span>
-																				// 		</p>
-																				// 		<p
-																				// 			onClick={() => {
-																				// 				this.openCurious(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id,item.message_date ,item.message_data);
-																				// 			}}
-																				// 			className={card.actionIconHover}
-																				// 			style={{ textAlign: "left", marginBottom: "0px", marginTop: "0", fontSize: "12px", }}
-																				// 		>
-																				// 			<span className={card.actionIcon} > <img src={curiousImg} className={card.actionIcon} title="Curious" style={{ marginTop: "5px", width: "13px", color: "#545353", marginRight: "8px", cursor: "pointer", }}></img>
-																				// 				Curious
-																				// 			</span>
-																				// 		</p>
-																				// 		<p onClick={() => { this.openSpam(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id,item.message_date); }} className={card.actionIconHover} style={{ textAlign: "left", marginBottom: "0px", marginTop: "0", fontSize: "12px", }} >
-																				// 			<span className={card.actionIcon} >
-																				// 				<FontAwesomeIcon className={card.actionIcon} title="Spam" icon={faTrashAlt} style={{ marginTop: "5px", width: "13px", color: "#545353", marginRight: "8px", cursor: "pointer", }} />
-																				// 				Spam
-																				// 			</span>
-																				// 		</p>
-																				// 	</div>
-																				// </>
-
-                                                                                ''
-																			) : null}
-																		</span>
-
-																<div className="chat__item__action"></div>
-																</div>
-																</div>
 																<div item xs={1}>
 																<input
-																	style={{height: "20px", width: '20px', marginBottom: "119%"}}
+																	style={{height: "20px", width: '20px', marginBottom: "119%",margin:'0 .5rem'}}
 																	name={item.from_name!=='Sheraspace'?item.from_name:item.employee_name}
 																	disabled={item.is_service_request==true?true:item.is_on_hold_service_request==true?true:item.is_curious==true?true:item.is_problem==true?true:item.is_incident==true?true:item.is_junk==true?true:null}
 																	// disabled={true}
@@ -981,7 +915,7 @@ const MessengerChatApp = () => {
 															<div className="chat__item me">
 																<div item xs={1}>
 																	<input
-																		style={{height: "20px", width: '20px', marginBottom: "104%", marginLeft:"16%"}}
+																		style={{height: "20px", width: '20px', marginBottom: "104%", marginLeft:"-16%"}}
 																		name={item.from_name!=='Sheraspace'?item.from_name:item.employee_name}
 																		disabled={item.is_service_request==true?true:item.is_on_hold_service_request==true?true:item.is_curious==true?true:item.is_problem==true?true:item.is_incident==true?true:item.is_junk==true?true:null}
 																		type="checkbox"
@@ -992,40 +926,19 @@ const MessengerChatApp = () => {
 																		// checked={this.state.isGoing}
 																		onChange={(e) =>handleInputChange(e)} />
 																</div>
-																<div item xs={1} style={{marginBottom: "3%" ,}}>
+																<div item xs={1} style={{marginBottom: "4%" ,marginRight:'2%',padding:'0 4px'}}>
 																<div className="moreOptions" >
 																		<span>
-																		<img src={'moreOptions'} onClick={() => showActionModal( item.message_id, ) } title="More options" style={{ cursor: "pointer", color: "#545353", height: '32px', }}></img>
-																			
-																			{modal ===
-																			item.message_id ? (
-																				<div >
-																					<div
-																						onClick={() => this.closeActionModal() }
-																						style={{ position: "fixed", width: "100%", height: "100%", zIndex: "9999999999999999999999999999999", transition: "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 153ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", transform: "scale(1, 1) translateZ(0px)", top: "10%", left: "0", right: "0", bottom: "0", margin: "auto", }}
-																					/>
-																					<div
-																						className={card.actionPopupCss}
-																						style={{ top: "-3%", left: "0%", minWidthwidth: "fit-content", position:'absolute',zIndex: "9999999999999999999999999999999", cursor: "pointer", }}
-																					>
-																						
-																						<p 	onClick={() => {openEditAgent(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id); }} 
-																							className={card.actionIconHover} style={{ textAlign: "left", marginBottom: "5px", fontSize: "12px", }} >
-																							<span className={card.actionIcon}>
-																							<FontAwesomeIcon className={card.actionIcon} title="Edit Agent" icon={faPencilAlt} style={{ width: "16px", color: "#545353", marginRight: "8px", cursor: "pointer", }} />
-																								Edit Agent
-																							</span>
-																						</p>
-																						<p 	onClick={() => { openAddLink(item.from_name, item.message_id, JSON.parse(item.message_data), item.from_id); }} 
-																							className={card.actionIconHover} style={{ textAlign: "left", marginBottom: "5px", fontSize: "12px", }} >
-																							<span className={card.actionIcon}>
-																							<FontAwesomeIcon className={card.actionIcon} title="Add Link" icon={faLink} style={{ width: "16px", color: "#545353", marginRight: "8px", cursor: "pointer", }} />
-																								Add Link
-																							</span>
-																						</p>
-																					</div>
-																				</div>
-																			) : null}
+																		<div style={{position:'relative',width:"100%" ,backgroundColor:'',cursor:'pointer',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}} onClick={()=>{setshowedit(index === showeditindex? false :true);setshoweditindex(index === showeditindex ? null :index);setselecteditem(item)}}>
+                                                                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                                                                                {showedit &&  <div style={{position:'absolute',width:'8rem',right:'50%',top:'1%' ,height:'fit-content',display:( index === showeditindex) ?'flex':'none'}}>
+                                                                                    {/* <Editopstions
+                                                                                        getdata={getaction} edittext={'Edit'}/> */}
+                                                                                        <CustomEditors
+                                                                                        getdata={getaction} selected={['edit']}/>
+
+                                                                                </div>}
+                                                                            </div>
 																		</span>
 
 																		<div className="chat__item__action"></div>
@@ -1076,8 +989,9 @@ const MessengerChatApp = () => {
 											<div ref={messagesEndRef} />
 										</div>
 									</div>
-								</div>
-								</>:null }					
+								    </div>
+								</>:null }	
+                                </div>				
 									
 								</div>
 						
@@ -1125,6 +1039,8 @@ scrollbar-color: transparent transparent;
 
         .main__chatlist {
             padding: 0 40px 0 0px;
+            
+           
         }
         .chatlist__heading {
             display: flex;
@@ -1135,7 +1051,7 @@ scrollbar-color: transparent transparent;
       
         .chatlist__items {
             transition:all 300ms;
-            width:15vw;
+            width:100%;
             margin-top: 9px;
             overflow: auto;
             height:70%;
@@ -1152,7 +1068,7 @@ scrollbar-color: transparent transparent;
             padding-bottom: 10px;
             margin-top: 10px;
             cursor: pointer;
-            padding: 10px 10px 10px 20px;
+            padding: 10px;
             transition: all 0.3s cubic-bezier(0.88, 0.19, 0.37, 1.11);
             transform: scale(0);
             animation-name: showIn;
@@ -1248,9 +1164,9 @@ scrollbar-color: transparent transparent;
         }
 
         .main__chatcontent {
-            flex-grow: 1;
+           
             padding: 20px 40px;
-            max-width: 100%;
+            width: 100%;
             border-right: 1px solid ${global_css.secondary_txt_color};
             position: relative;
         }
@@ -1307,19 +1223,13 @@ scrollbar-color: transparent transparent;
                 transform: scale(1);
             }
         }
-        .chat__item .avatar {
-            margin-right: 0px;
-            margin-left: 20px;
-            background: #fff;
-            padding: 1px;
-        }
+        
         .chat__item__content {
             background-color: #4462ff;
             color: #fff;
-            padding: 15px;
+            padding: 10px;
             border-radius: 10px 10px 0 10px;
-            // max-width: 75%;
-            min-width: 215px;
+            width:100%;
             font-size: 12px;
         }
 
@@ -1352,14 +1262,13 @@ scrollbar-color: transparent transparent;
         }
 
         .chat__item.other {
-            // flex-direction: row-reverse;
             transform-origin: left;
         }
         .chat__item.other .chat__item__content {
             background-color: #fff;
             color: #000;
             border-radius: 10px 10px 10px 0;
-            max-width: 90%;
+          
         }
         .chat__item.other .avatar {
             margin-right: 20px;
@@ -1420,1013 +1329,6 @@ scrollbar-color: transparent transparent;
         }
 
       
-
-        .btn {
-            background-color: #fff;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            width: 230px;
-            height: 47px;
-            line-height: 47px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.02);
-            display: flex;
-            padding: 0;
-            transition: all 0.3s ease-in-out;
-        }
-        .btn:hover {
-            background-color: #4664ff;
-            color: #fff;
-            transform: scale(1.02);
-        }
-        .btn i {
-            flex: 0.2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            font-size: 18px;
-            border-right: 1px solid #ebe7fb;
-        }
-        .btn span {
-            flex: 0.8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* width */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: #6c84ff;
-            border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3b5bfe;
-        }
-
-        input {
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            height: 30px;
-            padding: 0 10px;
-            font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
-            color: #000;
-            font-size: 13px;
-        }
-
-        .square {
-            height: 100px;
-            width: 60px;
-            background-color: #ffcc99;
-            text-align: left;
-            border-radius: 30px 30px 0px 0px;
-            border: 1px solid black;
-            text-align: center;
-        }
-
-        .circle {
-            height: 40px;
-            width: 40px;
-            background-color: white;
-            border-radius: 50%;
-            margin: 10px auto 0px auto;
-            border: 1px solid black;
-        }
-
-        .showMonthlyReport {
-            width: 0;
-            position: fixed;
-            height: 250px;
-            top: 0;
-            right: 0;
-            overflow-x: hidden;
-            transition: 0.3s;
-            z-index: 10000;
-        }
-        .showMonthlyReport .closeMonthlyReport:hover {
-            color: #ffffff;
-            cursor: pointer;
-            background: #ff7370;
-        }
-        .showMonthlyReport .closeMonthlyReport {
-            display: initial;
-            background: #ef5350;
-            padding: 6px 20px;
-            border-radius: 14px 0 1px 14px;
-            position: fixed;
-            top: 13px;
-            color: #fff;
-            margin-left: -135px;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .mqlpanel {
-            width: 0;
-            position: fixed;
-            height: 250px;
-            top: 0;
-            right: 0;
-            overflow-x: hidden;
-            transition: 0.3s;
-            z-index: 10000;
-        }
-        .mqlpanel a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .mqlpanel a:hover {
-            cursor: text;
-        }
-        .mqlpanel .closemql:hover {
-            color: #ffffff;
-            cursor: pointer;
-            background: #ff7370;
-        }
-        .mqlpanel .closemql {
-            display: initial;
-            background: #ef5350;
-            padding: 5px 13px;
-            border-radius: 14px 0 1px 14px;
-            position: fixed;
-            top: 13px;
-            color: #fff;
-            margin-left: -135px;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .conversionpanel {
-            width: 0;
-            position: fixed;
-            height: 250px;
-            top: 0;
-            right: 0;
-            overflow-x: hidden;
-            transition: 0.3s;
-            z-index: 10000;
-        }
-        .conversionpanel a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .conversionpanel a:hover {
-            cursor: text;
-        }
-        .conversionpanel .closeconversion:hover {
-            color: #ffffff;
-            cursor: pointer;
-            background: #ff7370;
-        }
-        .conversionpanel .closeconversion {
-            display: initial;
-            background: #ef5350;
-            padding: 5px 13px;
-            border-radius: 14px 0 1px 14px;
-            position: fixed;
-            top: 13px;
-            color: #fff;
-            margin-left: -118px;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            width: 100%;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
-        .container {
-            padding: 2px 16px;
-        }
-        .buttonHover:hover {
-            background-color: #ccc;
-        }
-        input[type="checkbox"]:checked {
-            color: #ef5359 !important;
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            background-position: right;
-            background-size: 9px 9px;
-            background-repeat: no-repeat;
-            color: rgba(204, 204, 204, 0);
-            padding-left: 0;
-            margin-left: 0;
-        }
-        input[type="time"]::-webkit-calendar-picker-indicator {
-            background-position: right;
-            background-size: 9px 9px;
-            background-repeat: no-repeat;
-            color: rgba(204, 204, 204, 0);
-            padding-left: 0;
-            margin-left: 0;
-        }
-        .template:hover {
-            background: #ccc;
-        }
-        .address {
-            border: 0;
-            border-bottom: 2px solid;
-            background: transparent;
-            width: 100%;
-            color: #b5cded;
-        }
-        .suggestion:hover {
-            background: #eeeeee !important;
-        }
-        .repectOn {
-            width: 20px;
-            float: left;
-            text-align: center;
-            border: 1px solid #dadce0;
-            border-radius: 50%;
-            background: #dadce0;
-            font-size: 12px;
-            height: 18px;
-            margin-right: 7px;
-        }
-        .saveButton {
-            padding: 5px;
-            font-size: 14px;
-            background: #ef5357;
-            color: white;
-            border: 1px solid #ef5357;
-            border-radius: 3px;
-            width: 80%;
-            height: 30px;
-        }
-        .addButton {
-            padding: 7px;
-            font-size: 12px;
-            background: white;
-            color: #4f4545;
-            border: 1px solid #9f9c9c;
-            border-radius: 3px;
-        }
-        .addButton:hover {
-            background: #dfdfdf;
-        }
-
-        /* popupdivFirst CSS*/
-        .popupContent {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupDivFirst {
-            width: 0;
-            right: 0;
-            margin: -12px;
-            display: flex;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            position: fixed;
-            height: 100%;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: -63px;
-            z-index: 999;
-        }
-        .popupCloseOptionFirst {
-            flex-grow: 0;
-            max-width: 12%;
-            flex-basis: 12%;
-            background: transparent;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .closebtnFirst {
-            background: #ef5359;
-            font-size: 14px;
-            // margin-left: -31px;
-            margin-top: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 20px;
-            position: fixed;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-            z-index: -1; 
-        }
-        .popupContentFirst {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 9999;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-
-        // popupDivSecond
-        /* popupdivSecond CSS*/
-        .popupContent {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupDivSecond {
-            width: 0;
-            right: 0;
-            margin: -12px;
-            display: flex;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            position: fixed;
-            height: 100%;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: -63px;
-            z-index: 999;
-        }
-        .popupCloseOptionSecond {
-            flex-grow: 0;
-            max-width: 12%;
-            flex-basis: 12%;
-            background: transparent;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .closebtnSecond {
-            background: #ef5359;
-            font-size: 14px;
-            // margin-left: -31px;
-            margin-top: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 20px;
-            position: fixed;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupContentSecond {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        // popupDivFifth
-        /* popupdivFifth CSS*/
-        .popupContent {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupDivFifth {
-            width: 0;
-            right: 0;
-            margin: -12px;
-            display: flex;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            position: fixed;
-            height: 100%;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: -63px;
-            z-index: 999;
-        }
-        .popupCloseOptionFifth {
-            flex-grow: 0;
-            max-width: 12%;
-            flex-basis: 12%;
-            background: transparent;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .closebtnFifth {
-            background: #ef5359;
-            font-size: 14px;
-            // margin-left: -31px;
-            margin-top: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 20px;
-            position: fixed;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupContentFifth {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-
-        // popupDivThird
-        /* popupdivThird CSS*/
-        .popupContent {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupDivThird {
-            width: 0;
-            right: 0;
-            margin: -12px;
-            display: flex;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            position: fixed;
-            height: 100%;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: -63px;
-            z-index: 999;
-        }
-        .popupCloseOptionThird {
-            flex-grow: 0;
-            max-width: 12%;
-            flex-basis: 12%;
-            background: transparent;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .closebtnThird {
-            background: #ef5359;
-            font-size: 14px;
-            // margin-left: -31px;
-            margin-top: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 20px;
-            position: fixed;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-            z-index: -1; 
-        }
-        .popupContentThird {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 9999;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-
-
-        // popupDivFourth
-        /* popupdivFourth CSS*/
-        .popupContent {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupDivFourth {
-            width: 0;
-            right: 0;
-            margin: -12px;
-            display: flex;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            position: fixed;
-            height: 30%;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: 136px;
-            z-index: 999;
-        }
-        .popupCloseOptionFourth {
-            flex-grow: 0;
-            max-width: 12%;
-            flex-basis: 12%;
-            background: transparent;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .closebtnFourth {
-            background: #ef5359;
-            font-size: 14px;
-            // margin-left: -31px;
-            margin-top: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 20px;
-            position: fixed;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupContentFourth {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        // popupDivSixth
-        /* popupdivSixth CSS*/
-        .popupContent {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupDivSixth {
-            width: 0;
-            right: 0;
-            margin: -12px;
-            display: flex;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            position: fixed;
-            height: fit-content;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: 136px;
-            z-index: 999;
-        }
-        .popupCloseOptionSixth {
-            flex-grow: 0;
-            max-width: 12%;
-            flex-basis: 12%;
-            background: transparent;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .closebtnSixth {
-            background: #ef5359;
-            font-size: 14px;
-            // margin-left: -31px;
-            margin-top: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 20px;
-            position: fixed;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-        .popupContentSixth {
-            flex-grow: 0;
-            max-width: 88%;
-            flex-basis: 88%;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-        }
-
-        /*
-=====
-LEVEL 1. RESET STYLES
-=====
-*/
-
-        .field {
-            --uiFieldPlaceholderColor: var(--fieldPlaceholderColor, #767676);
-        }
-
-        .field__input {
-            background-color: transparent;
-            border-radius: 0;
-            border: none;
-
-            -webkit-appearance: none;
-            -moz-appearance: none;
-
-            font-family: inherit;
-            font-size: 1em;
-        }
-
-        .field__input:focus::-webkit-input-placeholder {
-            color: var(--uiFieldPlaceholderColor);
-        }
-
-        .field__input:focus::-moz-placeholder {
-            color: var(--uiFieldPlaceholderColor);
-            opacity: 1;
-        }
-
-        /*
-=====
-LEVEL 2. CORE STYLES
-=====
-*/
-
-        .a-field {
-            display: inline-block;
-        }
-
-        .a-field__input {
-            display: block;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        .a-field__input:focus {
-            outline: none;
-        }
-
-        /*
-=====
-LEVEL 3. PRESENTATION STYLES
-=====
-*/
-
-        /* a-field */
-
-        .a-field {
-            --uiFieldHeight: var(--fieldHeight, 40px);
-            --uiFieldBorderWidth: var(--fieldBorderWidth, 2px);
-            --uiFieldBorderColor: var(--fieldBorderColor);
-
-            --uiFieldFontSize: var(--fieldFontSize, 1em);
-            --uiFieldHintFontSize: var(--fieldHintFontSize, 1em);
-
-            --uiFieldPaddingRight: var(--fieldPaddingRight, 15px);
-            --uiFieldPaddingBottom: var(--fieldPaddingBottom, 15px);
-            --uiFieldPaddingLeft: var(--fieldPaddingLeft, 15px);
-
-            position: relative;
-            box-sizing: border-box;
-            font-size: var(--uiFieldFontSize);
-            padding-top: 1em;
-        }
-
-        .a-field__input {
-            height: var(--uiFieldHeight);
-            padding: 0 var(--uiFieldPaddingRight) 0 var(--uiFieldPaddingLeft);
-            border-bottom: var(--uiFieldBorderWidth) solid
-                var(--uiFieldBorderColor);
-        }
-
-        .a-field__input::-webkit-input-placeholder {
-            opacity: 0;
-            transition: opacity 0.2s ease-out;
-        }
-
-        .a-field__input::-moz-placeholder {
-            opacity: 0;
-            transition: opacity 0.2s ease-out;
-        }
-
-        .a-field__input:not(:placeholder-shown)
-            ~ .a-field__label-wrap
-            .a-field__label {
-            opacity: 0;
-            bottom: var(--uiFieldPaddingBottom);
-        }
-
-        .a-field__input:focus::-webkit-input-placeholder {
-            opacity: 1;
-            transition-delay: 0.2s;
-        }
-
-        .a-field__input:focus::-moz-placeholder {
-            opacity: 1;
-            transition-delay: 0.2s;
-        }
-
-        .a-field__label-wrap {
-            box-sizing: border-box;
-            width: 100%;
-            height: var(--uiFieldHeight);
-
-            pointer-events: none;
-            cursor: text;
-
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-
-        .a-field__label {
-            position: absolute;
-            bottom: calc(50% - 0.5em);
-
-            line-height: 1;
-            font-size: var(--uiFieldHintFontSize);
-
-            pointer-events: none;
-            transition: bottom 0.2s cubic-bezier(0.9, -0.15, 0.1, 1.15),
-                opacity 0.2s ease-out;
-            will-change: bottom, opacity;
-        }
-
-        .a-field__input:focus ~ .a-field__label-wrap .a-field__label {
-            opacity: 1;
-            bottom: var(--uiFieldHeight);
-        }
-
-        /* a-field_a1 */
-
-        .a-field_a1 .a-field__input {
-            transition: border-color 0.2s ease-out;
-            will-change: border-color;
-        }
-
-        .a-field_a1 .a-field__input:focus {
-            border-color: var(--fieldBorderColorActive);
-        }
-
-        /* a-field_a2 */
-
-        .a-field_a2 .a-field__label-wrap::after {
-            content: "";
-            box-sizing: border-box;
-            width: 0;
-            height: var(--uiFieldBorderWidth);
-            background-color: var(--fieldBorderColorActive);
-
-            position: absolute;
-            bottom: 0;
-            left: 0;
-
-            will-change: width;
-            transition: width 0.285s ease-out;
-        }
-
-        .a-field_a2 .a-field__input:focus ~ .a-field__label-wrap::after {
-            width: 100%;
-        }
-
-        /* a-field_a3 */
-
-        .a-field_a3 {
-            padding-top: 1.5em;
-        }
-
-        .a-field_a3 .a-field__label-wrap::after {
-            content: "";
-            box-sizing: border-box;
-            width: 100%;
-            height: 0;
-
-            opacity: 0;
-            border: var(--uiFieldBorderWidth) solid
-                var(--fieldBorderColorActive);
-
-            position: absolute;
-            bottom: 0;
-            left: 0;
-
-            will-change: opacity, height;
-            transition: height 0.2s ease-out, opacity 0.2s ease-out;
-        }
-
-        .a-field_a3 .a-field__input:focus ~ .a-field__label-wrap::after {
-            height: 100%;
-            opacity: 1;
-        }
-
-        .a-field_a3
-            .a-field__input:focus
-            ~ .a-field__label-wrap
-            .a-field__label {
-            bottom: calc(var(--uiFieldHeight) + 0.5em);
-        }
-
-        /*
-=====
-LEVEL 4. SETTINGS
-=====
-*/
-
-        .field {
-            --fieldBorderColor: #f5aeb1;
-            --fieldBorderColorActive: #ef5359;
-        }
-
-        /*
-=====
-DEMO
-=====
-*/
-
-        .page {
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 1000px;
-            margin: auto;
-            padding: 15px;
-
-            display: div;
-            div-gap: 20px;
-            align-items: flex-end;
-            order: 1;
-        }
-        .dateInputFirst {
-            width: 75%;
-            margin-left: 45px;
-        }
-
-        .dateInput {
-            width: 75%;
-        }
-        .totalInput {
-            margin-left: -45px;
-        }
-
-        @media screen and (max-width: 1300px) {
-            .dateInput {
-                width: 95%;
-            }
-            .dateInputFirst {
-                width: 95%;
-                margin-left: 2px;
-            }
-            .totalInput {
-                margin-left: 3px;
-            }
-
-            .estimationId {
-                font-size: 11px !important;
-            }
-        }
-
-        @media (min-width: 481px) {
-            .page {
-                div-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-
-        .popups {
-            position: relative;
-            display: contents;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        .popups .popuptexts {
-            visibility: hidden;
-            width: 900px;
-            height: 500px;
-            background-color: #fff;
-            color: #000;
-            text-align: center;
-            border-radius: 3px;
-            padding: 8px 0;
-            position: absolute;
-            z-index: 9;
-            top: 58px;
-            left: 22%;
-        }
-        .popups .popuptextsBackground {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .popups .show {
-            visibility: visible;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s;
-        }
-        .popups .hidden {
-            visibility: hidden;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s;
-        }
-        .rbc-toolbar {
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .contentDiv {
-            margin-top: 60px;
-            padding: 60px 0;
-        }
-
-        .formDiv {
-            // background-color: white;
-            width: 100%;
-            margin: auto;
-            text-align: left;
-            padding: 60px 15px;
-            border-radius: 7px;
-            margin-bottom: 30px;
-            padding-top: 40px;
-        }
-        h1 {
-            color: #ef5350;
-            margin-bottom: 35px;
-            font-weight: 300;
-            font-size: 27px;
-            font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
-        }
-        p {
-            color: #020202;
-            font-size: 20px;
-            margin-bottom: 10px;
-            margin-top: 10px;
-            font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
-        }
-        input {
-            width: 100%;
-            border: 1px solid #9d9d9d;
-            border-radius: 5px;
-            height: 35px;
-            padding: 0 10px;
-            margin-bottom: 8px;
-            font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
-        }
-        .buttonDiv {
-            text-align: center;
-            margin-top: 23px;
-            margin-bottom: 35px;
-        }
-        button {
-            margin: auto;
-            background-color: #ef5350;
-            color: white;
-            border-radius: 5px;
-            outline: 0;
-            border: 0;
-            padding: 12px 60px;
-            font-size: 20px;
-            font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
-        }
-        input:focus {
-            outline: 0;
-        }
-        button:hover {
-            cursor: pointer;
-            background-color: #dc2723;
-        }
-        @media screen and (max-width: 600px) {
-            .contentDiv {
-                padding: 45px 30px;
-            }
-            .formDiv {
-                width: 100%;
-            }
-            button {
-                width: 100%;
-                padding: 8px 60px;
-            }
-        }
-        @media screen and (max-width: 430px) {
-            .contentDiv {
-                padding: 45px 20px;
-            }
-            .formDiv {
-                width: 100%;
-                padding: 25px 25px;
-            }
-        }
-        @media screen and (max-width: 330px) {
-            p {
-                font-size: 17px;
-            }
-            h1 {
-                font-size: 23px;
-            }
-        }
-
 
         `}
     </style>
