@@ -10,7 +10,7 @@ function App() {
   return (
     <>
         <ChakraProvider resetCSS={false}>
-        <RouterProvider router = {router}></RouterProvider>
+         <RouterProvider router = {router}></RouterProvider>
             </ChakraProvider>
         <Toaster position="top-right"
                  reverseOrder={true}></Toaster>

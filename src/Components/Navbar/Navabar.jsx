@@ -12,30 +12,34 @@ import {useAuth} from "../../Context/AuthInfo.jsx";
 import { global_css } from '../../GlobalCss/GlobalCSS.js';
 import { Link } from 'react-router-dom';
 import LandingRoute from '../../Modules/LandingPage/LandingRoute.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeModuleRoute } from '../../toolkit/features/componentRoutingSlice.jsx';
+
 const Navabar = () => {
+    
+    const dispatch=useDispatch() 
     const { user , logout} = useAuth();
+    const[selectedlang,Setselectedlang]=useState({
+        lang:'EN',
+        image:usaimagesvg
+    })
+    const[clicked,setclicked]=useState(false)
+    const[clickedsec,setclickedsec]=useState(false)
+    
 
-  const[selectedlang,Setselectedlang]=useState({
-    lang:'EN',
-    image:usaimagesvg
-  })
-  const[clicked,setclicked]=useState(false)
-  const[clickedsec,setclickedsec]=useState(false)
-   
+    const data=[
+        {
+            'lang':'Change password',
+            'image':'',
+            'code':1
+        },
+        {
+            'lang':'Sign out',
+            'image':'',
+            'code':2
+        }
 
-   const data=[
-    {
-        'lang':'Change password',
-        'image':'',
-        'code':1
-    },
-    {
-        'lang':'Sign out',
-        'image':'',
-        'code':2
-    }
-
-]
+    ]
 
 
     const showlangoptions=()=>{
@@ -62,7 +66,9 @@ const Navabar = () => {
                <div style={{height:"auto",width:'auto',marginLeft:'4%'}}>
                     {/* <img src={companylogo} style={{width:'193px'}} /> */}
                
-                   <span  onClick={()=> window.location.reload()} style={{width:'193px',color:global_css.primary_txt_color,cursor:'pointer'}}>Company logo</span>
+                   <span 
+                    onClick={()=>dispatch(changeModuleRoute(null))}
+                    style={{width:'193px',color:global_css.primary_txt_color,cursor:'pointer'}}>Company logo</span>
                  
                </div>
 

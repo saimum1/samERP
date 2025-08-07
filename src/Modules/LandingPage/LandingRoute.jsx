@@ -8,11 +8,13 @@ import CRMSkeleton from '../CRM/CRMSkeleton';
 import DashboardCrm from '../CRM/MarketingDashboard/DashboardCrm';
 import SettingsSkeleton from '../Settings/SettingsSkeleton';
 import HelpDeskSkeleton from '../HelpDesk/HelpDeskSkeleton';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const LandingRoute = () => {
    
-
+    const moduleCode=useSelector((state)=>state.moduleRouting.modularCode)
+console.log("asas",useSelector((state)=>state.moduleRouting.modularCode))
     const [showcomponent, setshowcomponent] = useState()
 
     const [pageview, setpageview] = useState(true)
@@ -20,10 +22,17 @@ const LandingRoute = () => {
 
 
     const getRenderCode=(e)=>{
-        console.log("get the code",e)
-        settransition()
-        setshowcomponent(e)
+        // console.log("get the code",e)
+        // settransition()
+        // setshowcomponent(e)
     }
+
+
+    useEffect(() => {
+       settransition()
+       setshowcomponent(moduleCode)
+    }, [moduleCode])
+    
 
 
     const renderComponent = () => {

@@ -2,8 +2,13 @@ import React,{useState} from 'react'
 import { global_css } from '../../GlobalCss/GlobalCSS'
 import { homelandingdataset } from './LandingDashboardData'
 import { transition } from '@chakra-ui/react'
+import { useSelector, useDispatch } from 'react-redux';
+import { changeModuleRoute } from '../../toolkit/features/componentRoutingSlice';
 
 const LdashBoard = ({getRenderCode}) => {
+
+    const dispatch=useDispatch() 
+
   
     const styles = {
        
@@ -49,7 +54,8 @@ const LdashBoard = ({getRenderCode}) => {
 
 
       const redirectTocomp=(e)=>{
-        getRenderCode(e)
+        // getRenderCode(e)
+        dispatch(changeModuleRoute(e))
 
       }
 
