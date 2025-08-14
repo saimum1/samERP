@@ -22,9 +22,9 @@ export const router = createBrowserRouter([
             {
                 path : '/',
                 element :
-                    // <PrivateRoute>
+                    <PrivateRoute>
                     <LandingRoute/>
-                 // </PrivateRoute> 
+                 </PrivateRoute> 
             },
             {
                 path : '/signing',

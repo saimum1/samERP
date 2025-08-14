@@ -6,6 +6,7 @@ import accountingicon from '../../assets/static/analyticgf.gif'
 import settingicon from '../../assets/static/settingx.gif'
 import locationicon from '../../assets/static/locationgf.gif'
 import hricon from '../../assets/static/hr.gif'
+import productximage from '../../assets/static/product2.gif' 
 
 export const homelandingdataset=[
    
@@ -36,6 +37,10 @@ export const homelandingdataset=[
                         'img':settingicon,
                         'name':'Settings',
                         'code':6
+                         },{
+                        'img':productximage,
+                        'name':'Product',
+                        'code':7
                          },
             
 

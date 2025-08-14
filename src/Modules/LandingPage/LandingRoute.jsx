@@ -9,6 +9,7 @@ import DashboardCrm from '../CRM/MarketingDashboard/DashboardCrm';
 import SettingsSkeleton from '../Settings/SettingsSkeleton';
 import HelpDeskSkeleton from '../HelpDesk/HelpDeskSkeleton';
 import { useSelector, useDispatch } from 'react-redux';
+import ProductSkeleton from '../Products/ProductSkeleton';
 
 
 const LandingRoute = () => {
@@ -47,6 +48,8 @@ console.log("asas",useSelector((state)=>state.moduleRouting.modularCode))
 
         case 6:
           return <SettingsSkeleton  />
+        case 7:
+          return <ProductSkeleton  />
        
       default:
         return <LdashBoard getRenderCode={getRenderCode}/>;
