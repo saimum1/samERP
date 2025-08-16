@@ -39,7 +39,7 @@ export const homelandingdataset=[
                         'code':6
                          },{
                         'img':productximage,
-                        'name':'Product',
+                        'name':'Product Listing',
                         'code':7
                          },
             

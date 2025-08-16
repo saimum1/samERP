@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faL } from '@fortawesome/free-solid-svg-icons'
 
 import {useAuth} from "../../Context/AuthInfo.jsx";
+import ProductTable from './ProductPages/ProductCategory.jsx'
+import ProductList from './ProductPages/ProductList.jsx'
 // import axios from "axios";
 // import config from "../../config.jsx";
 // import HelpDeskDashboard from './HelpDeskDashboard/HelpDeskDashboard.jsx'
@@ -42,10 +44,10 @@ const ProductSkeleton = () => {
   console.log(":operatorrxxx",showcomponentouter)
     switch (showcomponent) {
         case 0:
-        return  "<HelpDeskDashboard/>"
+        return  <ProductTable/>
         // <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/>;
         case 1:
-          return "<MessengerChatApp />"
+          return <ProductList />
             //   if(showcomponentouter === 'Facebook'){
             //     return <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
              
