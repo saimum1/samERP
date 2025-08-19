@@ -24,7 +24,7 @@ import VideoUploader from '../../../Components/PopNotification/VideoUploader.jsx
 import { useAuth } from '../../../Context/AuthInfo.jsx';
 
 
-const AddProduct = ({isOpen, onClose, GetOperators ,actionType, operatorForEdit}) => {
+const AddProductCategory = ({isOpen, onClose, GetOperators ,actionType, operatorForEdit}) => {
     console.log('action=-0=',actionType)
       const { user , token ,profileInfo} = useAuth();
 
@@ -301,5 +301,5 @@ const AddProduct = ({isOpen, onClose, GetOperators ,actionType, operatorForEdit}
     );
 };
 
-export default AddProduct;
+export default AddProductCategory;
 

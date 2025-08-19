@@ -10,6 +10,7 @@ import SettingsSkeleton from '../Settings/SettingsSkeleton';
 import HelpDeskSkeleton from '../HelpDesk/HelpDeskSkeleton';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductSkeleton from '../Products/ProductSkeleton';
+import OrderListSkeleton from '../OrderList/OrderListSkeleton';
 
 
 const LandingRoute = () => {
@@ -50,6 +51,8 @@ console.log("asas",useSelector((state)=>state.moduleRouting.modularCode))
           return <SettingsSkeleton  />
         case 7:
           return <ProductSkeleton  />
+          case 5:
+          return <OrderListSkeleton  />
        
       default:
         return <LdashBoard getRenderCode={getRenderCode}/>;

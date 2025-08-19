@@ -15,11 +15,11 @@ export const homelandingdataset=[
       'name':'Help Desk',
         'code':0
          },
-         {
-            'img':hricon,
-            'name':'HR',
-            'code':3
-             }, 
+         // {
+         //    'img':hricon,
+         //    'name':'HR',
+         //    'code':3
+         //     }, 
              {
                'img':crmicon,
                'name':'CRM',
@@ -31,16 +31,16 @@ export const homelandingdataset=[
                  },
                  {
                     'img':salesicon,
-                    'name':'Sales',
+                    'name':'Order List',
                     'code':5
                      }, {
-                        'img':settingicon,
-                        'name':'Settings',
-                        'code':6
-                         },{
                         'img':productximage,
                         'name':'Product Listing',
                         'code':7
+                         },{
+                        'img':settingicon,
+                        'name':'Settings',
+                        'code':6
                          },
             
 

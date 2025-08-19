@@ -300,8 +300,7 @@ console.log("ppppppppppppppp", selectedlang)
                     <ModalHeader >Add new Offer </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-
-                 
+                  
 
                         <FormControl>
                             <FormLabel style={{fontWeight :'bold',display:"flex",justifyContent:'flex-start',alignItems:'center',gap:'6px',fontSize:'12px'}}>Operator</FormLabel>

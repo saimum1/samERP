@@ -33,7 +33,7 @@ console.log("=-====-=-=-=", selectedOperator)
           const response = await axios.get(`${config.apiUrl}/api/operator`);
           console.log('Response: for operator', response.data.operators);
           if(!selectedOperator.id){
-              setTableData(response.data.operators)
+              setTableData(response.data)
 
           }else{
               console.log('Response: for selectedOperator', selectedOperator);
@@ -99,7 +99,8 @@ console.log("=-====-=-=-=", selectedOperator)
                                 // borderBottomLeftRadius:"8px",
                                 borderRadius:'6px',
                                 border: '1px solid var(--Base-Color-White-Dark, #999)',
-                                height: "auto",
+                                height: "30rem",
+                                overflow:'auto',
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -107,11 +108,11 @@ console.log("=-====-=-=-=", selectedOperator)
                                 position: "absolute",
                                 top: "4.9rem",
                                 // right: "2.6rem",
-                                zIndex: 1,
+                                zIndex: 99,
                                 transition: "all 300ms"
                                 }}
                             >
-                                {tableData.filter((item) => item.name !== selectedOperator.name).map((item,index,array) => (
+                                {tableData?.filter((item) => item.name !== selectedOperator.name).map((item,index,array) => (
                                   <>
                                 <div
                                     key={item.code}
@@ -122,16 +123,13 @@ console.log("=-====-=-=-=", selectedOperator)
                                     width: "100%",
                                     height: "2.6rem",
                                     paddingLeft:'1rem',
-                                    // borderBottomLeftRadius:index === (array.length -1)? '8px':'',
-                                    // borderBottomRightRadius:index === (array.length -1)? '8px':'',
-                                    // borderBottom:index === (array.length -1)?'':'2px solid #303038'
                                     }}
                                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#555")}
                                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2B2B33")}
                                     onClick={()=>setlang(item)}
                                 >
                                     <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", flex: "1", width: "100%", height: "100%",gap:'1rem' }}>
-                                    <img src={`${config.apiUrl}/${item.logoUrl}`} style={{ width: "25px", height: "25px" }} alt='' />
+                                 { item.logoUrl && <img src={`${config.apiUrl}/${item.logoUrl}`} style={{ width: "25px", height: "25px" }} alt='' /> }
                                   
                                      <psan>{item.name} </psan> 
                                     </div>

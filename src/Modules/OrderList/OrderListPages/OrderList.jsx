@@ -1,3 +1,4 @@
+
 import React, {useEffect,useRef,  useState} from 'react';
 import { StatusOnlineIcon, SearchIcon } from "@heroicons/react/outline";
 import {
@@ -30,9 +31,9 @@ import Popnotification from "../../../Components/PopNotification/Popnotification
 import CustomEditors from "../../../Components/EditFunctionality/CustomEditors.jsx";
 import {convertString} from "../../../Components/commonFunctions/StringConversion.jsx";
 import { useAuth } from '../../../Context/AuthInfo.jsx';
-import AddProduct from './AddProduct.jsx';
+import AddOrder from './AddOrder.jsx';
 
-const ProductList = () => {
+const OrderList = () => {
           const { user , token ,profileInfo} = useAuth();
     
 
@@ -44,10 +45,7 @@ const ProductList = () => {
     const [selecteditem,setselecteditem]=useState(null)
     const [actiontype,setactiontype]=useState(false)
     const [status, setStatus]=useState('')
-    const [isOpenD, setIsOpenD] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [operatorForEdit, setOperatorForEdit] = useState({});
     const [productForEdit, setProductForEdit] = useState({});
     const [showAlert, setShowAlert] = useState(false);
     const { isOpen : isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure()
@@ -195,14 +193,6 @@ const ProductList = () => {
     };
 
 
-    const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setshoweditindex(null);
-        }
-      };
-
-
-
 
       useEffect(() => {
         setLoader(true)
@@ -211,13 +201,15 @@ const ProductList = () => {
 
     return (
        <div   style={{width:"100%",height:"100%",backgroundColor:global_css.mainPageFrontColor,color:global_css.primary_txt_color}} className=" rounded-[3px]">	
-            <AddProduct isOpen={isOpen} onClose={onClose} actionType={actiontype} GetProducts={GetProducts} productForEdit={productForEdit} />
+            <AddOrder isOpen={isOpen} onClose={onClose} actionType={actiontype} GetProducts={GetProducts} productForEdit={productForEdit} />
             <AlertBox isOpen={isAlertOpen} onOpen={onAlertOpen} onClose={onAlertClose} type={alertType} deleteId={selecteditem} text={alertText} buttonText={alertButtonText} seconDbuttonText={alertButtonTextSecond} exFunc={alertType==='warning'?UpdateBulk : deleteOperator}/>
             {loader &&  <LoadingSoS  /> }
             {showpopoup &&  <Popnotification  msg={showpopoupmsg} showpopoup={showpopoup} status={showpopoupstatus} /> }
             {!nodata?  <Card  className="w-full h-full text-white mb-12" style={{borderRadius : global_css.card_border_radius,backgroundColor:global_css.primary_card_bg,  boxShadow : 'none'}}>
                 <div className="flex justify-between items-center mb-14">
-                <Title className="text-4xl">Product List</Title>
+
+                <Title className="text-4xl">Order List</Title>
+
                     <div  className="flex justify-end  items-center gap-3 w-4/12">
                         <label  style={{border : '1px solid #595959', position: 'relative', display: 'inline-block', zIndex : '1' }} htmlFor="file-input" className="w-8/12 h-10 cursor-pointer bg-[#404040] hover:bg-[#545454] text-[#9CA3AF]  py-1 px-4 rounded-md shadow-sm hover:shadow-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         <span onClick={() => {
@@ -352,4 +344,4 @@ const ProductList = () => {
     );
 };
 
-export default ProductList
+export default OrderList

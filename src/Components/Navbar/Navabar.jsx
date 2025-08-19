@@ -8,6 +8,7 @@ import { data } from 'autoprefixer';
 import italyimagesvg from '../Navbar/Image/IT.svg'
 import usaimagesvg from '../Navbar/Image/US.svg'
 import profilepic from '../../assets/static/propic.png'
+import companylogo from '../../assets/static/companylogo.png'
 import {useAuth} from "../../Context/AuthInfo.jsx";
 import { global_css } from '../../GlobalCss/GlobalCSS.js';
 import { Link } from 'react-router-dom';
@@ -64,11 +65,12 @@ const Navabar = () => {
         width:'100%',justifyContent:'space-between',alignItems:'center' }} >
           
                <div style={{height:"auto",width:'auto',marginLeft:'4%'}}>
-                    {/* <img src={companylogo} style={{width:'193px'}} /> */}
+                {companylogo ? 
+                    <img src={companylogo} style={{width:'93px'}} />:
                
                    <span 
                     onClick={()=>dispatch(changeModuleRoute(null))}
-                    style={{width:'193px',color:global_css.primary_txt_color,cursor:'pointer'}}>Company logo</span>
+                    style={{width:'193px',color:global_css.primary_txt_color,cursor:'pointer'}}>Company logo</span>}
                  
                </div>
 

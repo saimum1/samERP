@@ -1,14 +1,17 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { global_css } from '../../GlobalCss/GlobalCSS'
 import { homelandingdataset } from './LandingDashboardData'
 import { transition } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
 import { changeModuleRoute } from '../../toolkit/features/componentRoutingSlice';
+import { fetchProductCount } from '../../toolkit/features/orderCountSlice';
+import { useAuth } from '../../Context/AuthInfo';
 
 const LdashBoard = ({getRenderCode}) => {
 
     const dispatch=useDispatch() 
-
+    const orderCount = useSelector((state) => state.orderCount.count);
+    const { token } = useAuth();
   
     const styles = {
        
@@ -60,6 +63,12 @@ const LdashBoard = ({getRenderCode}) => {
       }
 
 
+
+useEffect(() => {
+  dispatch(fetchProductCount(token));
+}, [token]);
+
+
   return (
 
 
@@ -71,9 +80,34 @@ const LdashBoard = ({getRenderCode}) => {
 
                                 <div className="grid-item" 
                                  onClick={()=>redirectTocomp(e.code)}
-
+                                  style={{ position: 'relative' }}
                                  key={index}
-                                >
+                                > 
+                                 {e.code === 5 && (
+                                    <div
+                                      style={{
+                                        position: 'absolute',
+                                        top: '5px',
+                                        left: '13rem',
+                                        minWidth: '20px',
+                                        maxWidth: 'fit-content', 
+                                        height: '20px',
+                                        backgroundColor: 'red',
+                                        borderRadius: '50%',
+                                        color: 'white',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        fontSize: '12px',
+                                        fontWeight: 'bold',
+                                        zIndex: 10,
+                                        padding:'.7rem .5rem'
+                                      }}
+                                    >
+                                      {orderCount || '!' }
+                                    </div>
+                                  )}
+
                                      <div style={styles.container} >
                                      <div style={styles.shadow}  ></div>
                                            {!loaded &&     <div style={{display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',width:'100%'}} className='textContainer'>

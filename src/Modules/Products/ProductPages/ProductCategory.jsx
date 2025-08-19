@@ -31,7 +31,7 @@ import CustomEditors from "../../../Components/EditFunctionality/CustomEditors.j
 import {convertString} from "../../../Components/commonFunctions/StringConversion.jsx";
 // import {useTranslation} from "react-i18next";
 import { useAuth } from '../../../Context/AuthInfo.jsx';
-import AddProduct from './AddProductCategory.jsx';
+import AddProductCategory from './AddProductCategory.jsx';
 
 const ProductTable = () => {
           const { user , token ,profileInfo} = useAuth();
@@ -85,15 +85,13 @@ const ProductTable = () => {
 
         if(e.type === 'edit'){
             GetOperatorForUpdate(selecteditem.id)
-
-
             onOpen()
         }else if(e.type === 'delete'){
             onAlertOpen();
             setAlertType('')
-            setAlertText(t('areyousureDelOperators'));
-            setAlertButtonText(t('yesDel'))
-            setAlertButtonTextSecond(t('cancel'))
+            setAlertText('areyousureDelOperators');
+            setAlertButtonText('yesDel')
+            setAlertButtonTextSecond('cancel')
             setactiontype(false)
         }
 
@@ -230,7 +228,7 @@ const ProductTable = () => {
 
     return (
        <div   style={{width:"100%",height:"100%",backgroundColor:global_css.mainPageFrontColor,color:global_css.primary_txt_color}} className=" rounded-[3px]">	
-            <AddProduct isOpen={isOpen} onClose={onClose} actionType={actiontype} GetOperators={GetOperators} operatorForEdit={operatorForEdit} />
+            <AddProductCategory isOpen={isOpen} onClose={onClose} actionType={actiontype} GetOperators={GetOperators} operatorForEdit={operatorForEdit} />
             <AlertBox isOpen={isAlertOpen} onOpen={onAlertOpen} onClose={onAlertClose} type={alertType} deleteId={selecteditem} text={alertText} buttonText={alertButtonText} seconDbuttonText={alertButtonTextSecond} exFunc={alertType==='warning'?UpdateBulk : deleteOperator}/>
             {loader &&  <LoadingSoS  /> }
             {showpopoup &&  <Popnotification  msg={showpopoupmsg} showpopoup={showpopoup} status={showpopoupstatus} /> }
