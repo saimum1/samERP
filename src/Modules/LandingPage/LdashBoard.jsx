@@ -100,7 +100,7 @@ useEffect(() => {
                                         minWidth: '20px',
                                         maxWidth: 'fit-content', 
                                         height: '20px',
-                                        backgroundColor: 'red',
+                                        backgroundColor: '#c45959ff',
                                         borderRadius: '50%',
                                         color: 'white',
                                         display: 'flex',

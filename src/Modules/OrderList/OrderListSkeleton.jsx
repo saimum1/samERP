@@ -4,7 +4,7 @@ import LineIcon from '../../assets/static/Line.svg'
 import { dataset } from './OrderListSkeletonData.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faL } from '@fortawesome/free-solid-svg-icons'
-
+import { useSelector, useDispatch } from 'react-redux';
 import {useAuth} from "../../Context/AuthInfo.jsx";
 import OrderList from './OrderListPages/OrderList.jsx'
 
@@ -12,6 +12,7 @@ import OrderList from './OrderListPages/OrderList.jsx'
 const OrderListSkeleton = () => {
 
     const {user, token} = useAuth();
+     const orderCount = useSelector((state) => state.orderCount.count);
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [selectedIndex, setselectedIndex] = useState(null);
     const [HoveredIndexInner, setHoveredIndexInner] = useState(null);
@@ -96,7 +97,13 @@ const OrderListSkeleton = () => {
                                             }}
                                         >
                                           <span><img src={ (hoveredIndex === index || selectedIndex === index) ? n.imgsec : n.img}  style={{width:'24px',height:'24px'}}/></span>                         
-                                        <span style={{color: (hoveredIndex === index || selectedIndex === index) ? global_css.leftMenuHoverTextColor : global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px'}}>{n.name}</span>
+                                        <span style={{color: (hoveredIndex === index || selectedIndex === index) ? global_css.leftMenuHoverTextColor : global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px',display:'flex',justifyContent:'flex-left',alignItems:'center',width:'100%',gap:'2%'}}>
+                                          <span>{n.name}</span>
+                                          <span>{n.code ===1 && orderCount>0 &&
+                                           <span style={{width:'auto',height:'auto', borderRadius:'12px',padding:"1px 6px" ,color:'white' ,backgroundColor:"#c45959ff",display:'flex',justifyContent:'center',alignItems:'center',fontWeight:'600',fontStyle:'normal',fontSize:'12px'}}>{orderCount}</span>     
+                                           }
+                                           </span>
+                                          </span>
                                         {n.menu.length>0?
                                       
                                         <FontAwesomeIcon rotation={selectedIndex === index? 180:''} icon={faAngleUp}  style={{color:(hoveredIndex === index || selectedIndex === index)? global_css.leftMenuHoverTextColor :global_css.primary_txt_color,transition:'all 300ms'}}/>
@@ -115,8 +122,20 @@ const OrderListSkeleton = () => {
                                               onClick={()=>{setshowcomponent(n.code);setshowcomponentouter(i.code);setselectedIndexOuter(innderindex);settransition()}}
                                               >
                                                                 
-                                            {(selectedIndex === index)? <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center' ,width:'100%'}}> <span  style={{color: (HoveredIndexInner === innderindex || selectedIndexOuter === innderindex) ? global_css.leftMenuHoverTextColor:global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px'}}>  {i.name} </span> 
+                                            {(selectedIndex === index)? <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center' ,width:'100%'}}> <span  style={{color: (HoveredIndexInner === innderindex || selectedIndexOuter === innderindex) ? global_css.leftMenuHoverTextColor:global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'95%',lineHeight:'20px'}}>
+                                             
+                                                <span>   {i.name}  </span>
+                                                </span> 
                                         </div>:''}
+
+                                         {/* {(selectedIndex === index || showcomponentouter === i)? <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center' ,gap:'4px',width:'100%'}}> <span  style={{color: (HoveredIndexInner === innderindex || showcomponentouter === i || selectedIndexOuter === innderindex) ? '#27CF7A':global_css.primary_txt_color ,fontFamily:'Lexend',fontWeight:'400',fontSize:'16px',lineHeight:'24px'}}>  {i} </span> 
+                                             <span >  {i === 'Sim request' || i === 'Agent Request' || i === 'SIM List'? 
+                                              <span style={{width:'auto',height:'auto', borderRadius:'12px',padding:"1px 8px" ,color:'#FFFFFF' ,backgroundColor:"#29CC79",display:'flex',justifyContent:'center',alignItems:'center',fontWeight:'500',fontStyle:'normal',fontSize:'12px'}}>
+                                                 {i === 'Agent Request'? offerCount :i === 'SIM List'? simcount: ordercount} 
+                                                  </span>:''}
+                                                   </span> 
+                                                   
+                                                   </div>:''}  */}
 
                                             </div>
                                         )
