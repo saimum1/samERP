@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeModuleRoute } from '../../toolkit/features/componentRoutingSlice';
 import { fetchProductCount } from '../../toolkit/features/orderCountSlice';
 import { useAuth } from '../../Context/AuthInfo';
-
+import toast, { Toaster } from "react-hot-toast";
 const LdashBoard = ({getRenderCode}) => {
 
     const dispatch=useDispatch() 
@@ -57,6 +57,10 @@ const LdashBoard = ({getRenderCode}) => {
 
 
       const redirectTocomp=(e)=>{
+        if(e === 4){
+            toast.error("Under Development")
+            return
+        } 
         // getRenderCode(e)
         dispatch(changeModuleRoute(e))
 
@@ -73,6 +77,10 @@ useEffect(() => {
 
 
     <div style={{height : '100%' ,width:'100%',backgroundColor:global_css.homeBackColor,display:'flex',justifyContent:'center',alignItems:'center',transition:'all 400ms',color:global_css.primary_txt_color}}>
+      <Toaster
+                      position="top-right"
+                      reverseOrder={false}
+                      />
         <div style={{height:'100%',width:'75%',display:'flex',justifyContent:'center',alignItems:'flex-start',textAlign:'center',overflowY:'auto',padding:'2rem 0rem',transition:'all 400ms'}}>
                 <div className="grid-container" style={{transition:'all 400ms'}}>
                     {homelandingdataset?.map((e,index)=>{

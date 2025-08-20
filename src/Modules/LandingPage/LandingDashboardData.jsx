@@ -30,14 +30,15 @@ export const homelandingdataset=[
                 'code':4
                  },
                  {
-                    'img':salesicon,
-                    'name':'Order List',
-                    'code':5
-                     }, {
                         'img':productximage,
                         'name':'Product Listing',
                         'code':7
-                         },{
+                         },
+                          {
+                    'img':salesicon,
+                    'name':'Order List',
+                    'code':5
+                     },{
                         'img':settingicon,
                         'name':'Settings',
                         'code':6

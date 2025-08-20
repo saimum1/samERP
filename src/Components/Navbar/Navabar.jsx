@@ -66,7 +66,7 @@ const Navabar = () => {
           
                <div style={{height:"auto",width:'auto',marginLeft:'4%'}}>
                 {companylogo ? 
-                    <img src={companylogo} style={{width:'93px'}} />:
+                    <img onClick={()=>dispatch(changeModuleRoute(null))} src={companylogo} style={{width:'93px',color:global_css.primary_txt_color,cursor:'pointer'}} />:
                
                    <span 
                     onClick={()=>dispatch(changeModuleRoute(null))}
@@ -129,8 +129,9 @@ const Navabar = () => {
                                             position: "absolute",
                                             top: "3.7rem",
                                             right: "3rem",
-                                            zIndex: 1,
-                                            transition: "all 500ms"
+                                            zIndex: 99,
+                                            transition: "all 500ms",
+                                           
                                             }}
                                         >
                                             {clickedsec && data.map((item,index,array) => (
@@ -144,7 +145,8 @@ const Navabar = () => {
                                                 height: "2.6rem",
                                                 borderBottomLeftRadius:index === (array.length -1)? '8px':'',
                                                 borderBottomRightRadius:index === (array.length -1)? '8px':'',
-                                                borderBottom:index === (array.length -1)?'':'2px solid #303038'
+                                                borderBottom:index === (array.length -1)?'':'2px solid #303038',
+                                                boxShadow:`0px 0px 2px ${global_css.shadowcolor}` 
                                                 }}
                                                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#555")}
                                                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = global_css.profileCardBackColor)}

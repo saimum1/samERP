@@ -11,6 +11,7 @@ import HelpDeskSkeleton from '../HelpDesk/HelpDeskSkeleton';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductSkeleton from '../Products/ProductSkeleton';
 import OrderListSkeleton from '../OrderList/OrderListSkeleton';
+import toast, { Toaster } from "react-hot-toast";
 
 
 const LandingRoute = () => {
@@ -46,6 +47,7 @@ console.log("asas",useSelector((state)=>state.moduleRouting.modularCode))
        
         case 2:
         return <CRMSkeleton  />
+         
 
         case 6:
           return <SettingsSkeleton  />
@@ -80,7 +82,10 @@ console.log("asas",useSelector((state)=>state.moduleRouting.modularCode))
   return (
     <div   style={{height : 'calc(100vh - 4.5rem)', width:'100vw', backgroundColor:global_css.primary_bg,display:'flex' ,justifyContent:'center',alignItems:'center'}}>
         
-          
+          <Toaster
+                      position="top-right"
+                      reverseOrder={false}
+                      />
                 <div className={`page-transition ${isPageChanging ? 'changing' : ''}`} id='showcomp' style={{height:'100%',width:'100%',display:'flex',justifyContent:'center',alignItems:'center' ,transition:'all 300ms'}}>
                      { pageview && renderComponent()}
                 </div>

@@ -302,7 +302,7 @@ const ProductList = () => {
                     </Button>
 
                 </div>
-            </Card>:<Nodatafound btn_text={'Add Operator'}  tittle_head={'No Operator List Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'} buttonclicked={onOpen}/>}
+            </Card>:<Nodatafound btn_text={'Add Product'}  tittle_head={'No Operator List Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'} buttonclicked={onOpen}/>}
             <style jsx>
             {
               ` input[type="checkbox"] {
