@@ -16,8 +16,8 @@ import AddOperator from "../InventoryTable/AddOperator.jsx";
 const Login = () => {
     const [captcha, setCaptcha] = useState(null)
     const [inputValues, setInputValues] = useState({
-        password: '',
-        email: ''
+        password: 'admin1234',
+        email: 'admin@admin.com',
     });
     const[captchaError, setCaptchaError] = useState(false)
     const[loginError, setLoginError] = useState(false)
@@ -106,13 +106,13 @@ const Login = () => {
                     <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center',flexDirection:'column',
                     width:'100%',gap:'11px' }}>
                         <span style={{width:"100%",color:'rgba(255, 255, 255, 0.75)'}}>Email</span>
-                        <input name="email" onChange={handleInputChange} type='mail' style={{height:'48px',backgroundColor:'#444444',padding:'1rem' ,border:'none',borderRadius:'10px',fontFamily:'inter',width:'100%',color:'rgba(255, 255, 255, 0.85)'}} placeholder="xyz123@gmail.com"/>
+                        <input value={inputValues.email} name="email" onChange={handleInputChange} type='mail' style={{height:'48px',backgroundColor:'#444444',padding:'1rem' ,border:'none',borderRadius:'10px',fontFamily:'inter',width:'100%',color:'rgba(255, 255, 255, 0.85)'}} placeholder="xyz123@gmail.com"/>
                     </div>
 
                     <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center',flexDirection:'column',
                     width:'100%',gap:'11px' }}>
                         <span style={{width:"100%",color:'rgba(255, 255, 255, 0.75)'}}>Password</span>
-                        <TextInput name="password" onChange={handleInputChange} type='password' className=" border-none rounded-[10px] bg-[#444444]" style={{height:'48px',fontFamily:'inter',width:'100%',color:'rgba(255, 255, 255, 0.85)'}} placeholder="Type password here"/>
+                        <TextInput value={inputValues.password} id='password' name="password" onChange={handleInputChange} type='password' className=" border-none rounded-[10px] bg-[#444444]" style={{height:'48px',fontFamily:'inter',width:'100%',color:'rgba(255, 255, 255, 0.85)'}} placeholder="Type password here"/>
                     </div>
 
 
