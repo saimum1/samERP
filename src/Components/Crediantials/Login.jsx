@@ -36,9 +36,9 @@ const Login = () => {
         try {
 
             const response = await axios.post(`${config.apiUrl}/api/auth/login`, inputValues);
-            console.log('Response:', response);
+            console.log('Response:token', response);
             login(response?.data?.user, response?.data?.token);
-            if(response.statusText==='OK'){
+            if(response.status===200){
 
                     navigate(from, { replace: true });
 
@@ -52,7 +52,7 @@ const Login = () => {
             console.error('Error++++:', error);
             setLoginError(true)
 
-            throw error;
+          
         }
     };
 
