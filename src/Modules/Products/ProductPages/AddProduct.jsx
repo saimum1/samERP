@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Button, FormControl, FormLabel, Input, Modal,
   ModalBody, ModalCloseButton, ModalContent,
-  ModalFooter, ModalHeader, ModalOverlay
+  ModalFooter, ModalHeader, ModalOverlay, Box
 } from "@chakra-ui/react";
 import { global_css } from "../../../GlobalCss/GlobalCSS.js";
 import axios from "axios";
@@ -15,6 +15,7 @@ import { useAuth } from "../../../Context/AuthInfo.jsx";
 import OperatorDropDown from "../../../Components/CustomDropDown/OperatorDropDown.jsx";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
+import aiimage from '../../../assets/static/aiani.gif'
 
 const AddProduct = ({ isOpen, onClose, GetProducts, actionType, productForEdit }) => {
   const { token } = useAuth();
@@ -23,10 +24,15 @@ const AddProduct = ({ isOpen, onClose, GetProducts, actionType, productForEdit }
   const [categories, setCategories] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState({});
- const [showpopoup,setshowpopup]=useState(false)
-    const [showpopoupstatus,setshowpopupstatus]=useState('sucess')
-    const [showpopoupmsg,setshowpopupmsg]=useState('')
-    const [productStatus,setProductStatus]=useState(false)
+  const [showpopoup,setshowpopup]=useState(false)
+  const [showpopoupstatus,setshowpopupstatus]=useState('sucess')
+  const [showpopoupmsg,setshowpopupmsg]=useState('')
+  const [productStatus,setProductStatus]=useState(false)
+  const [isAIGenerateOpen, setIsAIGenerateOpen] = useState(false);
+  const [aiTopic, setAiTopic] = useState(product?.name);
+  const [aiFormatInstructions, setAiFormatInstructions] = useState("Write the article in a professional tone suitable for a product description. Structure it with an introduction (150 words), two main sections with H2 headings (300 words total, include 3 bullet points in each section summarizing key points), and a conclusion (150 words). Ensure the content highlights eco-friendly benefits and practical applications.");
+  const [aiWordCount, setAiWordCount] = useState(600);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     axios.get(`${config.apiUrl}/api/product`, { headers: { Authorization: `Bearer ${token}` } })
@@ -53,6 +59,51 @@ const AddProduct = ({ isOpen, onClose, GetProducts, actionType, productForEdit }
   const notify = (msg, status) => { setPopup({ msg, status }); setTimeout(() => setPopup({}), 1500); };
 
 
+
+const generateArticle = async () => {
+    if ( !aiFormatInstructions) {
+      setshowpopupmsg("Please provide topic and format instructions");
+      setshowpopupstatus("fail");
+      setshowpopup(true);
+      setTimeout(() => setshowpopup(false), 1500);
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const response = await axios.post(
+        `${config.apiUrl}/api/product/generative`,
+        {
+          topic: product?.name,
+          format_instructions: aiFormatInstructions,
+          word_count: aiWordCount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Update the description field with the generated article
+      console.log("result of generative ai",response)
+      update("description", response?.data?.generated_content);
+      setIsAIGenerateOpen(false); // Close the AI modal
+      setshowpopupmsg("Article generated successfully");
+      setshowpopupstatus("success");
+      setshowpopup(true);
+      setTimeout(() => setshowpopup(false), 1500);
+    } catch (error) {
+      console.error("Error generating article:", error);
+      setshowpopupmsg("Failed to generate article");
+      setshowpopupstatus("fail");
+      setshowpopup(true);
+      setTimeout(() => setshowpopup(false), 1500);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+  
+  
 const updateProduct = async (id) => {
         try {
             const data = {...product,'categoryId':parseInt(selectedCategory?.id), "status": productStatus ? 'available' : 'not_available'}
@@ -177,13 +228,6 @@ const updateProduct = async (id) => {
               <Input value={product.lotNo} onChange={e => update("lotNo", e.target.value)} />
             </FormControl>
 
-            {/* <FormControl mt={4}><FormLabel>Status</FormLabel>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={product.status} onChange={e => update("status", e.target.checked)} hidden />
-                <TickForm status={product.status} /> <span>Available</span>
-              </label>
-            </FormControl> */}
-
              <FormControl className="mt-5">
                             <FormLabel style={{fontWeight :'bold'}}>status <span style={{color:'red'}}>*</span></FormLabel>
 
@@ -201,10 +245,102 @@ const updateProduct = async (id) => {
                             </label>
                         </FormControl>
 
-            <FormControl mt={14}><FormLabel>Description</FormLabel>
-              <SunEditor height="200px" setContents={product.description}
-                onChange={content => update("description", content)} />
+
+             <FormControl mt={20}>
+              <Box display="flex" justifyContent="space-between" alignItems="center" gap={2} padding={2}>
+                 <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                     <FormLabel mb={0}>Description</FormLabel>
+                     <img src={aiimage} alt="AI Generation" width="35" style={{ display:isGenerating ? 'block' :   'none' ,cursor:'pointer'}} />
+                 </div>
+
+                 <Button
+                  height={7}
+                    bg="#27CF7A"
+                    color="white"
+                    onClick={() => generateArticle()}
+                    isLoading={isGenerating}
+                    loadingText="Generating..."
+                  >
+                    Generate with AI
+                  </Button>
+
+              </Box>
+              
+               <Box
+                    sx={{
+                      position: 'relative',
+                      borderRadius: 'md',
+                      p: 2,
+                      border: '2px solid',
+                      borderColor: isGenerating ? 'transparent' : 'gray.600',
+                      overflow: 'hidden',
+                      '& .sun-editor': {
+                        border: isGenerating ? '1px solid rgba(0, 247, 255, 0.5)' : '1px solid gray.600',
+                        borderRadius: 'md',
+                        transition: 'all 0.3s ease-in-out',
+                        boxShadow: isGenerating ? '0 0 10px rgba(0, 247, 255, 0.7)' : 'none',
+                      },
+                      '& .sun-editor-editable': {
+                        position: 'relative',
+                        '&:after': isGenerating
+                          ? {
+                              content: '""',
+                              position: 'absolute',
+                              top: 0,
+                              right: 0,
+                              width: '2px',
+                              height: '1.2em',
+                              backgroundColor: '#ff9900ff',
+                              animation: 'blink 1s step-end infinite',
+                            }
+                          : {},
+                      },
+                      '&::before': isGenerating
+                        ? {
+                            content: '""',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            borderRadius: 'inherit',
+                            padding: '2px',
+                            background: 'linear-gradient(90deg, #00f7ff, #ff007bff, #007bff, #00f7ff, #ff6027ff)',
+                            backgroundSize: '300% 300%',
+                            animation: 'neonFlow 4s linear infinite',
+                            WebkitMask:
+                              'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                            WebkitMaskComposite: 'xor',
+                            maskComposite: 'exclude',
+                            pointerEvents: 'none',
+                          }
+                        : {},
+                    }}
+                    css={{
+                      '@keyframes neonFlow': {
+                        '0%': { backgroundPosition: '0% 50%' },
+                        '50%': { backgroundPosition: '100% 50%' },
+                        '100%': { backgroundPosition: '0% 50%' },
+                      },
+                      '@keyframes blink': {
+                        '0%, 100%': { opacity: 1 },
+                        '50%': { opacity: 0 },
+                      },
+                    }}
+                  >
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <SunEditor
+                        readOnly={isGenerating}
+                        height="200px"
+                        setContents={product.description}
+                        onChange={(content) => update('description', content)}
+                      />
+                    </div>
+                  </Box>
+
             </FormControl>
+
+
           </ModalBody>
 
           <ModalFooter>
