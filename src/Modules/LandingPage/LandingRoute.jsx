@@ -1,11 +1,7 @@
 import React,{useState,useEffect} from 'react'
-
 import LdashBoard from './LdashBoard';
 import { global_css } from '../../GlobalCss/GlobalCSS';
-import Dashboardskeleton from '../../Components/SkeletonDashboard/Dashboardskeleton';
-import { useParams } from 'react-router-dom';
 import CRMSkeleton from '../CRM/CRMSkeleton';
-import DashboardCrm from '../CRM/MarketingDashboard/DashboardCrm';
 import SettingsSkeleton from '../Settings/SettingsSkeleton';
 import HelpDeskSkeleton from '../HelpDesk/HelpDeskSkeleton';
 import { useSelector, useDispatch } from 'react-redux';

@@ -1,17 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import bg from "../../assets/static/icons_tower.png"
 import {Button, TextInput} from "@tremor/react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowsRotate} from "@fortawesome/free-solid-svg-icons";
-import ReCAPTCHA from 'react-google-recaptcha';
 import axios from "axios";
 import config from "../../config.jsx";
-import toast from "react-hot-toast";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAuth} from "../../Context/AuthInfo.jsx";
-import Popnotification from "../PopNotification/Popnotification.jsx";
-import AddOperator from "../InventoryTable/AddOperator.jsx";
-
 
 const Login = () => {
     const [captcha, setCaptcha] = useState(null)
@@ -56,6 +49,18 @@ const Login = () => {
         }
     };
 
+
+    const trackbackendUptime = async () => {
+            console.log("calling trackbackendUptime")
+        // try {
+        //     await axios.post(`${config.apiUrl}`);
+        // } catch (error) {
+        //     console.error('Error++++:', error);
+
+          
+        // }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setInputValues((prevValues) => ({
@@ -79,6 +84,10 @@ const Login = () => {
     //         setCaptchaError(true)
     //     }
     // }
+
+    useEffect(() => {
+        trackbackendUptime();
+    }, []);
     return (
         <div style={{height : 'calc(100vh - 4.5rem)'}}>
 
