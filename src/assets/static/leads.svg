@@ -1,0 +1,29 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Defining the funnel shape -->
+  <path d="M100 50 L300 50 L250 350 L150 350 Z" fill="#e0e0e0" stroke="#333" stroke-width="2"/>
+  
+  <!-- Lead dots with animation -->
+  <circle cx="200" cy="50" r="5" fill="#4CAF50">
+    <animate attributeName="cy" from="50" to="350" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="200" to="180" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="220" cy="50" r="5" fill="#2196F3">
+    <animate attributeName="cy" from="50" to="350" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="220" to="200" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="180" cy="50" r="5" fill="#FF9800">
+    <animate attributeName="cy" from="50" to="350" dur="3.5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="180" to="170" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Labels for funnel stages -->
+  <text x="320" y="50" font-family="Arial" font-size="14" fill="#333">Awareness</text>
+  <text x="320" y="150" font-family="Arial" font-size="14" fill="#333">Interest</text>
+  <text x="320" y="250" font-family="Arial" font-size="14" fill="#333">Qualification</text>
+  <text x="320" y="350" font-family="Arial" font-size="14" fill="#333">Conversion</text>
+  
+  <!-- Animated filter effect at the bottom -->
+  <rect x="150" y="330" width="100" height="20" fill="#4CAF50">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+  </rect>
+</svg>

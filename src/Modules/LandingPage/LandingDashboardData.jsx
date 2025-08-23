@@ -7,6 +7,7 @@ import settingicon from '../../assets/static/settingx.gif'
 import locationicon from '../../assets/static/locationgf.gif'
 import hricon from '../../assets/static/hr.gif'
 import productximage from '../../assets/static/product2.gif' 
+import leadsource from '../../assets/static/leadsource.gif' 
 
 export const homelandingdataset=[
    
@@ -29,6 +30,11 @@ export const homelandingdataset=[
                 'name':'Accounting',
                 'code':4
                  },
+                //  ,{
+                // 'img':leadsource,
+                // 'name':'Lead Sourcing',
+                // 'code':8
+                //  },
                  {
                         'img':productximage,
                         'name':'Product Listing',
