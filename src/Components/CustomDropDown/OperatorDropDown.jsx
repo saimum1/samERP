@@ -9,6 +9,7 @@ import italyimagesvg from '../Navbar/Image/IT.svg'
 import usaimagesvg from '../Navbar/Image/US.svg'
 import axios from "axios";
 import config from "../../config.jsx";
+import { global_css } from '../../GlobalCss/GlobalCSS.js';
 const OperatorDropDown = ({SetselectedOperator, selectedOperator, setclicked, clicked}) => {
 
 
@@ -73,7 +74,7 @@ console.log("=-====-=-=-=", selectedOperator)
             padding:'8px 16px',display:"flex",justifyContent:'space-between',alignItems:'center'}}>
               {selectedOperator?.id?
             <div style={{display:'flex',justifyContent:'flex-start' ,alignItems:'center' ,width:'100%' ,height:'100%' ,gap:"1rem"}}>
-                <img src={`${config.apiUrl}/${selectedOperator.logoUrl}`} style={{width:'25px' ,height:'25px'}}/>
+             {selectedOperator.logoUrl && <img src={`${config.apiUrl}/${selectedOperator.logoUrl}`} style={{width:'25px' ,height:'25px'}}/>}   
                  <span>{selectedOperator.name }</span> 
                  </div>:
                  <div style={{display:'flex',justifyContent:'flex-start' ,alignItems:'center' ,width:'100%' ,height:'100%'}}>
@@ -99,7 +100,7 @@ console.log("=-====-=-=-=", selectedOperator)
                                 // borderBottomLeftRadius:"8px",
                                 borderRadius:'6px',
                                 border: '1px solid var(--Base-Color-White-Dark, #999)',
-                                height: "30rem",
+                                maxHeight: "30rem",
                                 overflow:'auto',
                                 display: "flex",
                                 justifyContent: "center",
@@ -109,7 +110,8 @@ console.log("=-====-=-=-=", selectedOperator)
                                 top: "4.9rem",
                                 // right: "2.6rem",
                                 zIndex: 99,
-                                transition: "all 300ms"
+                                transition: "all 300ms",
+                                boxShadow: `0px 2px 10px ${global_css.shadowcolor}`,
                                 }}
                             >
                                 {tableData?.filter((item) => item.name !== selectedOperator.name).map((item,index,array) => (

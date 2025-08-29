@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Button, FormControl, FormLabel, Input, Modal,
   ModalBody, ModalCloseButton, ModalContent,
-  ModalFooter, ModalHeader, ModalOverlay, Box
+  ModalFooter, ModalHeader, ModalOverlay, Box, Grid, GridItem, Image, IconButton
 } from "@chakra-ui/react";
 import { global_css } from "../../../GlobalCss/GlobalCSS.js";
 import axios from "axios";
@@ -33,7 +33,9 @@ const AddProduct = ({ isOpen, onClose, GetProducts, actionType, productForEdit }
   const [aiFormatInstructions, setAiFormatInstructions] = useState("Write the article in a professional tone suitable for a product description. Structure it with an introduction (150 words), two main sections with H2 headings (300 words total, include 3 bullet points in each section summarizing key points), and a conclusion (150 words). Ensure the content highlights eco-friendly benefits and practical applications.");
   const [aiWordCount, setAiWordCount] = useState(600);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [imageUrls, setImageUrls] = useState(['', '', '', '']);
 
+  console.log("dada",selectedCategory)
   useEffect(() => {
     axios.get(`${config.apiUrl}/api/product`, { headers: { Authorization: `Bearer ${token}` } })
       .then(res => setCategories(res.data))
@@ -43,16 +45,22 @@ const AddProduct = ({ isOpen, onClose, GetProducts, actionType, productForEdit }
       setSelectedCategory(productForEdit.operator)
     }
     setProduct(actionType ? {
+      id: productForEdit?.id,     
       name: productForEdit?.name || "",
+      price: productForEdit?.price || 0,
       code: productForEdit?.code || "",
       quantity: productForEdit?.quantity || null,
       lotNo: productForEdit?.lotNo || null,
       logo: productForEdit?.logo || "",
       status: productForEdit?.status,
       description: productForEdit?.description || "",
+      imageink1: productForEdit?.imageink1 || "",
+      imageink2: productForEdit?.imageink2 || "",
+      imageink3: productForEdit?.imageink3 || "",
+      imageink4: productForEdit?.imageink4 || "",
       
     //   categoryId:  selectedCategory
-    } : { name: "", code: "", quantity: "", lotNo: "", logo: "", status: 'not_available', description: "", categoryId: null });
+    } : { name: "",price:0, code: "", quantity: "", lotNo: "", logo: "", status: 'not_available', description: "", categoryId: null, imageink1: "", imageink2: "", imageink3: "", imageink4: "" });
   }, [actionType, productForEdit, token]);
 
   const update = (k, v) => setProduct(p => ({ ...p, [k]: v }));
@@ -106,7 +114,7 @@ const generateArticle = async () => {
   
 const updateProduct = async (id) => {
         try {
-            const data = {...product,'categoryId':parseInt(selectedCategory?.id), "status": productStatus ? 'available' : 'not_available'}
+            const data = {...product,'categoryId':selectedCategory?.id, "status": productStatus ? 'available' : 'not_available'}
             console.log("adadadata_update",data)
 
             const response = await axios.put(`${config.apiUrl}/api/product/${productForEdit?.id}`, data,{
@@ -150,7 +158,7 @@ const updateProduct = async (id) => {
 
     const saveProduct = async () => {
         try {
-            const data = {...product,'categoryId':parseInt(selectedCategory?.id),"status": productStatus ? 'available' : 'not_available'}
+            const data = {...product,'categoryId':selectedCategory?.id,"status": productStatus ? 'available' : 'not_available'}
             console.log("adadadata",data)
 
             const response = await axios.post(`${config.apiUrl}/api/product`, data,{
@@ -224,6 +232,94 @@ const updateProduct = async (id) => {
               <Input type="number" value={product.quantity} onChange={e => update("quantity", e.target.value)} />
             </FormControl>
 
+
+            <FormControl mt={4}><FormLabel>Item price</FormLabel>
+              <Input type="number" value={product.price} onChange={e => update("price", e.target.value)} />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Product Images</FormLabel>
+              <div style={{ display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '1rem',justifyItems: 'center',paddingTop:'1rem' }}>
+                {['imageink1', 'imageink2', 'imageink3', 'imageink4'].map((key) => (
+                  <div key={key} style={{ position: 'relative', width: '100px', height: '100px' }}>
+                    {product?.[key] ? (
+                      <>
+                        <span
+                          style={{
+                            position: 'absolute',
+                            top: '-8px',
+                            right: '-8px',
+                            cursor: 'pointer',
+                            background: '#ef4444',
+                            color: 'white',
+                            borderRadius: '50%',
+                            width: '20px',
+                            height: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                          onClick={() => update(key, '')}
+                        >
+                          ×
+                        </span>
+                        <img
+                          src={product[key]}
+                          style={{ width: '150px', height: '100px', objectFit: 'cover', borderRadius: '4px' }}
+                        />
+                      </>
+                    ) : (
+                      <Input
+                        value={product[key] || ''}
+                        onChange={(e) => update(key, e.target.value)}
+                        placeholder="Image URL"
+                        size="lg"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </FormControl>
+
+            {/* <FormControl mt={4}><FormLabel>Product Images</FormLabel>
+              <div style={{display:'flex'}}>
+              
+               {product?.imageink1 ? 
+               <div >
+                <span style={{cursor:'pointer'}} onClick={e => update("imageink1",'')}>x</span>
+                <img src={product?.imageink1} style={{width:'100px',height:'100px'}} /> 
+               </div>
+               : <Input value={product.imageink1} onChange={e => update("imageink1", e.target.value)} />} 
+             
+              {product?.imageink2 ? 
+               <div >
+                <span style={{cursor:'pointer'}} onClick={e => update("imageink2",'')}>x</span>
+                <img style={{width:"2rem"}} src={product?.imageink2} style={{width:'100px',height:'100px'}} /> 
+               </div>
+               : <Input value={product.imageink2} onChange={e => update("imageink2", e.target.value)} />} 
+
+               {product?.imageink3 ? 
+               <div >
+                <span style={{cursor:'pointer'}} onClick={e => update("imageink3",'')}>x</span>
+                <img src={product?.imageink3} style={{width:'100px',height:'100px'}} /> 
+               </div>
+               : <Input value={product.imageink3} onChange={e => update("imageink3", e.target.value)} />} 
+
+               {product?.imageink4 ? 
+               <div >
+                <span style={{cursor:'pointer'}} onClick={e => update("imageink4",'')}>x</span>
+                <img src={product?.imageink4} style={{width:'100px',height:'100px'}} /> 
+               </div>
+               : <Input value={product.imageink4} onChange={e => update("imageink4", e.target.value)} />} 
+              
+
+
+              </div>
+            
+            </FormControl> */}
+
+
+
             <FormControl mt={4}><FormLabel>Lot No</FormLabel>
               <Input value={product.lotNo} onChange={e => update("lotNo", e.target.value)} />
             </FormControl>
@@ -246,6 +342,7 @@ const updateProduct = async (id) => {
                         </FormControl>
 
 
+              
              <FormControl mt={20}>
               <Box display="flex" justifyContent="space-between" alignItems="center" gap={2} padding={2}>
                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
