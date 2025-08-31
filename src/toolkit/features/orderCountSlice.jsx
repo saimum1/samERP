@@ -28,9 +28,10 @@ import config from "../../config";
 export const fetchProductCount = createAsyncThunk(
   "product/fetchProductCount",
   async (token) => {
-    const response = await axios.get(`${config.apiUrl}/api/product`, {
+    const response = await axios.get(`${config.apiUrl}/api/product/order`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    console.log("asdaasd", response.data);
     return response.data?.length; 
   }
 );

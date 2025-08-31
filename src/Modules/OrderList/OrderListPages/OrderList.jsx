@@ -32,6 +32,7 @@ import CustomEditors from "../../../Components/EditFunctionality/CustomEditors.j
 import {convertString} from "../../../Components/commonFunctions/StringConversion.jsx";
 import { useAuth } from '../../../Context/AuthInfo.jsx';
 import AddOrder from './AddOrder.jsx';
+import Dropdown from '../../../Components/Dropdown/Dropdown.jsx';
 
 const OrderList = () => {
           const { user , token ,profileInfo} = useAuth();
@@ -63,6 +64,10 @@ const OrderList = () => {
     const dropdownRef = useRef(null);
 
     console.log("ssssssssssss", status)
+
+
+  
+
     const handleSelect = (value) => {
         setSelected((prevSelected) => {
             if (prevSelected.includes(value)) {
@@ -98,30 +103,15 @@ const OrderList = () => {
 
     }
 
-    const callbox =()=>{
-        setactiontype(false)
-        onOpen()
-    }
-    
   
 
   
 
     const GetProducts = async () => {
-        try {
-            const response = await axios.get(`${config.apiUrl}/api/product`,{
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            console.log('ProductLIst', response.data);
-            setTableData(response?.data)
-            setNodata(response?.data?.length <= 0)
-            setLoader(false)
-        } catch (error) {
-            console.error('Error++++:', error);
-            setLoader(false)
-        }
+        axios.get(`${config.apiUrl}/api/product/order`).then(res => {
+                console.log("orderlistw32", res.data);
+                setTableData(res.data)
+                });
     };
 
     
@@ -194,10 +184,36 @@ const OrderList = () => {
 
 
 
-      useEffect(() => {
-        setLoader(true)
+    const getselecteditem = (item,status) => {
+        console.log("status",status,item)
+                    axios.patch(`${config.apiUrl}/api/product/order/${item?.id}?status=${status.lang}`, 
+            {}, 
+            { headers: { Authorization: `Bearer ${token}` } }
+            ).then(res => {
+              setshowpopupmsg('Update Success')
+                setshowpopupstatus('success')
+                setshowpopup(true)
+                setTimeout(() => {
+                    setshowpopup(false)
+
+                }, 1500);
+            }).catch(err => {
+                setshowpopupmsg('Update Failed')
+                setshowpopupstatus('failed')
+                setshowpopup(true)
+                setTimeout(() => {
+                    setshowpopup(false)
+
+                }, 1500);
+        
+            })
+
+    };
+
+
+    useEffect(() => {
         GetProducts()
-    }, []);
+    },[])
 
     return (
        <div   style={{width:"100%",height:"100%",backgroundColor:global_css.mainPageFrontColor,color:global_css.primary_txt_color}} className=" rounded-[3px]">	
@@ -226,57 +242,103 @@ const OrderList = () => {
                     </div>
                 </div>
 
-                
-                <Table onClick={() =>setFilterOpen(false)} className=" h-[60vh]">
-                    <TableHead>
-                        <TableRow className="!bg-[#444444] !rounded !rounded-1xl">
-                            <TableHeaderCell style={{borderTopLeftRadius:'5px',borderBottomLeftRadius:'5px',borderRight:'2px solid #303038'}}><input checked={isAllSelected}
-                                                                                                                                                     onChange={handleSelectAll} type="checkbox"/> serial</TableHeaderCell>
-                            <TableHeaderCell style={{borderRight:'2px solid #303038'}}>category</TableHeaderCell>
-                            <TableHeaderCell style={{borderRight:'2px solid #303038'}}>cat.code</TableHeaderCell>
-                            <TableHeaderCell style={{borderRight:'2px solid #303038'}}>status</TableHeaderCell>
-                            <TableHeaderCell style={{borderTopRightRadius:'5px',borderBottomRightRadius:'5px'}}>Action</TableHeaderCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody style={{minHeight : '300px' , overflow : 'auto'}}>
-                        {tableData?.map((item, index) => (
-                            <TableRow key={index} style={{borderColor:'#595959'}} 
-                                                     >
-                                <TableCell>
-                                    <input checked={selected.includes(item.id)}
-                                           onChange={() => handleSelect(item.id)}
-                                           type="checkbox"
-                                           id={`my-checkbox-${index}`}/>
-                                    <span className="ml-5">{(index + 1).toString().padStart(2, '0')}</span>
-                                </TableCell>
-                                <TableCell>
-                                    <Text className="flex gap-3"> {item.logoUrl && <img style={{height : '24px', width : '24px'}} src={`${config.apiUrl}${item.logoUrl}`}  alt=""/> }<span>{item.name}</span> </Text>
-                                </TableCell>
-                                <TableCell>
-                                    <Text>{item.code}</Text>
-                                </TableCell>
-
-                                <TableCell>
-                                       <Text className={item.status==='not_available'? "!text-red-600" : "!text-white"}>{convertString(item.status)}</Text>
-                                </TableCell>
-                                <TableCell>
-                                    <div style={{position:'relative',width:"100%" ,backgroundColor:'',cursor:'pointer',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}
-                                     onClick={()=>{setshowedit(index === showeditindex? false :true);setshoweditindex(index === showeditindex ? null :index);setselecteditem(item)}}
-                                  
-                                     >
-                                        <FontAwesomeIcon icon={faEllipsisVertical} />
-                                        {(showeditindex !== null)? <div style={{position:'absolute',width:'8rem',right:'50%',top:'1%' ,height:'fit-content',display:( index === showeditindex) ?'flex':'none'}}>
-                                      
-                                            <CustomEditors
-                                                getdata={getaction} selected={['edit', 'delete']}/>
-
-                                        </div>:''}
-                                    </div>
-                                </TableCell>
+            
+                <Table className="mt-5 h-[60vh] transition-all[300]">
+                        <TableHead>
+                            <TableRow className="!bg-[#444444] !rounded !rounded-1xl" style={{ margin: '0px 4px', backgroundColor: '' }}>
+                                <TableHeaderCell style={{ borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px', borderRight: '2px solid #303038' }}>
+                                    <input type="checkbox" /> seria
+                                </TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>order no</TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>order details</TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>lead Name</TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>lead Email</TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>total quantity</TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>total price</TableHeaderCell>
+                                <TableHeaderCell style={{ borderRight: '2px solid #303038' }}>status</TableHeaderCell>
+                                <TableHeaderCell style={{ borderTopRightRadius: '5px', borderBottomRightRadius: '5px' }}>Action</TableHeaderCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody style={{ height: '100%', backgroundColor: "", transition: "all 300ms" }} className='transition-all[300ms]'>
+                            {tableData?.map((item, index) => (
+                                <TableRow key={index} style={{ borderColor: '#595959', transition: "all 300ms" }}>
+                                    <TableCell>
+                                        <input type="checkbox" style={{ backgroundColor: '#2B2B33' }} />
+                                        <span style={{ backgroundColor: '#2B2B33' }} className="ml-5">
+                                            {(index + 1).toString().padStart(2, '0')}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell>
+                                        {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                            <Text>{item.orderid}</Text>
+                                        </div> */}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "flex-start",
+                                                maxWidth: "100px",     // 👈 must set width/constraint
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                                whiteSpace: "nowrap",
+                                            }}
+                                            >
+                                            <Text>{item.orderid}</Text>
+                                            </div>
+
+                                    </TableCell>
+                                    <TableCell>
+                                        <Text style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', gap: '5px', height: 'auto' }}>
+                                            {item.items?.map((n, idx) => (
+                                                <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
+                                                    <span style={{ width: '84%', textAlign: 'left' }}>{n?.name}</span>
+                                                    <span style={{ width: '2%' }}>:</span>
+                                                    <span style={{ width: '15%', textAlign: 'left', marginLeft: '10px' }}>{n?.quantity}</span>
+                                                </div>
+                                            ))}
+                                        </Text>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Text>{item.leadname}</Text>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Text>{item.leademail}</Text>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Text>{item.items?.reduce((total, item) => total + item.quantity, 0)}</Text>
+                                    </TableCell>
+
+                                    <TableCell>
+                                        <Text>{item.items?.reduce((total, item) => total + item.price * item.quantity, 0)}</Text>
+                                    </TableCell>
+                                    
+                                    <TableCell >
+                                        <Text><div style={{ backgroundColor: '', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', transition: "all 300ms", width: '8.5rem' }}>
+                                            <Dropdown 
+                                            // onClick={() => setselecteditem(item)}
+                                             dropType={''} 
+                                            //  getdata={getselecteditem}
+                                            getdata={(status) => getselecteditem(item, status)} 
+                                              order_status={item.status} />
+                                        </div></Text>
+                                    </TableCell>
+                                   
+                                    <TableCell>
+                                        <Text>1</Text>
+                                    </TableCell>
+                                  
+
+
+
+                                  
+
+
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+
+
                 <div className="max-w-sm mt-5  flex items-center">
                     <select style={{border : '1px solid #595959'}} className="w-full cursor-pointer bg-[#404040] h-10 hover:bg-[#545454] text-[#9CA3AF]  py-2.5 px-4 rounded-md shadow-sm hover:shadow-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onChange={(e) => setStatus(e.target.value)} value={status}>
                         <option value="">
