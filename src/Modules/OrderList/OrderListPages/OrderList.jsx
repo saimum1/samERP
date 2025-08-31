@@ -190,6 +190,7 @@ const OrderList = () => {
             {}, 
             { headers: { Authorization: `Bearer ${token}` } }
             ).then(res => {
+              GetProducts()
               setshowpopupmsg('Update Success')
                 setshowpopupstatus('success')
                 setshowpopup(true)
