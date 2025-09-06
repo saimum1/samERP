@@ -44,7 +44,8 @@ const CRMSkeleton = () =>{
         // <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/>;
         case 1:
               if(showcomponentouter === 'Facebook'){
-                return <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
+                return 
+                <Nodatafound btn_text={'Add New Sim'}  tittle_head={'No Dashboard Item Found'} title_des={'Aliquam porta nisl dolor, molestie pellentesque elit molestie in. Morbi metus neque, elementum ullam'}/> 
              
               }
         

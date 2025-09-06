@@ -96,7 +96,6 @@ const Navabar = () => {
                             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor =global_css.profileCardBackColor)}
                             onClick={()=>showlangoptions()}
                             >
-                    {/* #8d9aaa */}
                             <div style={{display:'flex',justifyContent:'center' ,alignItems:'center' ,flex:'1',width:'100%' ,height:'100%'}}>
                                 {/* <img src={selectedlang.image} style={{width:'48px' ,height:'25px'}}/> */}
                                 <div style={{width:'28px' ,height:'28px',borderRadius:'50%',border:`1px solid ${global_css.shadowcolor}`,overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center',boxShadow:'0px 0px 10px  whitesmoke',}}>
