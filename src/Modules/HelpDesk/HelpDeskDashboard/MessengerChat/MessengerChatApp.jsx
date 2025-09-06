@@ -11,7 +11,7 @@ import config from "../../../../config.jsx";
 import aiimage from '../../../../assets/static/aiani.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../../../../Context/AuthInfo.jsx';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faUserTie } from '@fortawesome/free-solid-svg-icons';
 
 const MessengerChatApp = () => {
     const {user} = useAuth();
@@ -291,6 +291,7 @@ const MessengerChatApp = () => {
             }
 
             const newLeads = analyzed.filter((a) => a.is_lead).map((a) => a.from_id);
+            console.log("checkingloead",newLeads)
             setLeads((prev) => [...new Set([...prev, ...newLeads])]);
             toast.success(`${newLeads.length} leads found and marked!`);
         } catch (error) {
@@ -355,8 +356,8 @@ const MessengerChatApp = () => {
                                     onClick={() => openUserMessages(item.from_id, item.from_name)}
                                     className={`chatlist__item ${selectedChat?.from_id === item.from_id ? "active" : ""}`}
                                 >
-                                    <div className="userMeta" style={{display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',gap:'1rem'}}>
-                                        <div style={{ display: 'flex', color: global_css.primary_txt_color, alignItems: 'center' }}>
+                                    <div className="userMeta" style={{display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'}}>
+                                        <div style={{ display: 'flex', color: global_css.primary_txt_color, alignItems: 'center',justifyContent:'flex-start',width:'100%' }}>
                                             
                                             <span style={{ float: 'left', marginRight: '5px' }}>
                                                 {/* {item.cycle_type_name !== 'MQL' && <UseAvatar cycle={item.cycle_type_name} />} */}
@@ -371,6 +372,16 @@ const MessengerChatApp = () => {
                                               <span className="activeTime" style={{ color: global_css.secondary_txt_color,fontSize:'8px' }}>
                                               {moment(item.updated_time).format('YYYY/MM/DD h:mma')}
                                               </span>
+                                            </div>
+
+                                            <div style={{paddingLeft:'2rem'}}>
+                                                {leads?.includes(item.from_id) && (
+                                                    <span className="activeTime" style={{ color: global_css.secondary_txt_color,fontSize:'20px' }}>
+                                                        <FontAwesomeIcon title="lead" width={"100%"} icon={faUserTie} color='#007bff'/>
+                                                    </span>
+                                                )}
+                                                        
+                                                
                                             </div>
                                       </div>
                                         
