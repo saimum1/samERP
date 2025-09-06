@@ -66,7 +66,7 @@ const MessengerChatApp = () => {
 
    
     const connectWebSocket = useCallback(() => {
-        ws.current = new WebSocket(`ws://${config.apiUrl.replace(/^http(s)?:\/\//, "")}/api/ws/agent`)
+        ws.current = new WebSocket(`${config.apiUrlWEBScoket}/api/ws/agent`)
         // ws.current = new WebSocket("ws://127.0.0.1:8000/ws/agent");
  
         ws.current.onopen = () => {
